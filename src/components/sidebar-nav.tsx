@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/strategy", label: "Strategy AI", icon: BotMessageSquare },
   { href: "/learning", label: "Learning Hub", icon: GraduationCap },
   { href: "/jobs", label: "Job Board", icon: Briefcase },

@@ -1,191 +1,118 @@
 
 "use client";
 
-import { AppLayout } from "@/components/app-layout";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart as LucideBarChart, TrendingUp, DollarSign, Target, CheckCircle, GraduationCap, Briefcase } from "lucide-react";
-import Link from "next/link";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  ChartLegend,
-  ChartLegendContent,
-} from "@/components/ui/chart";
-import { BarChart, Bar, CartesianGrid, XAxis, YAxis, LabelList } from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Briefcase, GraduationCap, Lightbulb, TrendingUp } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-const chartData = [
-  { month: "January", income: 1860, expenses: 800 },
-  { month: "February", income: 3050, expenses: 1200 },
-  { month: "March", income: 2370, expenses: 900 },
-  { month: "April", income: 7300, expenses: 2000 },
-  { month: "May", income: 2090, expenses: 1100 },
-  { month: "June", income: 2140, expenses: 1300 },
-];
-
-const chartConfig = {
-  income: {
-    label: "Income",
-    color: "hsl(var(--chart-1))",
-  },
-  expenses: {
-    label: "Expenses",
-    color: "hsl(var(--chart-2))",
-  },
-};
-
-
-export default function DashboardPage() {
+export default function LandingPage() {
   return (
-    <AppLayout title="Dashboard">
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <LucideBarChart className="h-6 w-6" />
-              Income Overview
-            </CardTitle>
-            <CardDescription>Visualize your potential income streams and progress.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={chartConfig} className="h-[300px] w-full">
-              <BarChart data={chartData} margin={{ top: 20, right: 0, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <ChartLegend content={<ChartLegendContent />} />
-                <Bar dataKey="income" fill="var(--color-income)" radius={4}>
-                   <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
-                </Bar>
-                <Bar dataKey="expenses" fill="var(--color-expenses)" radius={4}>
-                   <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
-                </Bar>
-              </BarChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-blue-100">
+      <header className="container mx-auto py-6 px-4 md:px-6 flex justify-between items-center">
+        <Link href="/" className="flex items-center gap-2">
+          <Lightbulb className="h-8 w-8 text-primary" />
+          <h1 className="text-2xl font-bold font-headline text-primary">ProsperIA</h1>
+        </Link>
+        <nav className="space-x-4">
+          <Button variant="ghost" asChild>
+            <Link href="/dashboard">Iniciar Sesión</Link>
+          </Button>
+          <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Link href="/dashboard">Comienza Gratis</Link>
+          </Button>
+        </nav>
+      </header>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <Target className="h-6 w-6" />
-              My Income Goals
-            </CardTitle>
-            <CardDescription>Track your financial targets.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Monthly Target</p>
-                <p className="text-2xl font-bold text-primary">$5,000</p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-green-500" />
+      <main className="flex-grow">
+        {/* Hero Section */}
+        <section className="container mx-auto py-16 md:py-24 px-4 md:px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold font-headline mb-6">
+            ProsperIA: Tu Inteligencia Artificial para el Éxito Financiero
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+            Genera estrategias de ingresos personalizadas, descubre oportunidades de aprendizaje y encuentra el trabajo de tus sueños. Todo en un solo lugar impulsado por IA.
+          </p>
+          <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 px-8">
+            <Link href="/dashboard">Explora el Dashboard</Link>
+          </Button>
+          <div className="mt-12">
+            <Image 
+              src="https://placehold.co/800x400.png" 
+              alt="Ilustración de ProsperIA en acción" 
+              width={800} 
+              height={400} 
+              className="rounded-lg mx-auto shadow-xl"
+              data-ai-hint="financial planning abstract" 
+            />
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-16 md:py-24 bg-background/70">
+          <div className="container mx-auto px-4 md:px-6">
+            <h3 className="text-3xl font-bold font-headline text-center mb-12">¿Por qué elegir ProsperIA?</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <Card className="shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader>
+                  <div className="flex justify-center mb-4">
+                    <Lightbulb className="h-12 w-12 text-accent" />
+                  </div>
+                  <CardTitle className="text-xl font-semibold text-center">Estrategias Inteligentes</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center text-muted-foreground">
+                  Nuestra IA analiza tu perfil para crear planes de ingresos únicos y adaptados a ti, maximizando tu potencial.
+                </CardContent>
+              </Card>
+              <Card className="shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader>
+                  <div className="flex justify-center mb-4">
+                    <GraduationCap className="h-12 w-12 text-accent" />
+                  </div>
+                  <CardTitle className="text-xl font-semibold text-center">Aprendizaje Continuo</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center text-muted-foreground">
+                  Accede a recursos y cursos curados para desarrollar las habilidades más demandadas en el mercado actual.
+                </CardContent>
+              </Card>
+              <Card className="shadow-lg hover:shadow-xl transition-shadow">
+                <CardHeader>
+                  <div className="flex justify-center mb-4">
+                    <Briefcase className="h-12 w-12 text-accent" />
+                  </div>
+                  <CardTitle className="text-xl font-semibold text-center">Oportunidades Reales</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center text-muted-foreground">
+                  Conéctate con ofertas de empleo relevantes y da el siguiente paso en tu carrera profesional.
+                </CardContent>
+              </Card>
             </div>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">Achieved This Month</p>
-                <p className="text-2xl font-bold text-green-500">$3,500</p>
-              </div>
-              <CheckCircle className="h-8 w-8 text-green-500" />
-            </div>
-            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Set New Goal</Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <DollarSign className="h-6 w-6" />
-              Strategy Quick Start
-            </CardTitle>
-            <CardDescription>Generate your personalized income strategy.</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center text-center">
-            <Image src="https://placehold.co/300x200.png" alt="AI Strategy Illustration" width={300} height={200} className="mb-4 rounded-lg" data-ai-hint="abstract technology" />
-            <p className="mb-4 text-muted-foreground">
-              Let our AI analyze your profile and suggest the best income streams for you.
-            </p>
-            <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link href="/strategy">
-                Generate Strategy
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <GraduationCap className="h-6 w-6" />
-              Featured Learning
-            </CardTitle>
-            <CardDescription>Enhance your skills with these courses.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              <li className="flex items-center justify-between">
-                <span>Advanced Digital Marketing</span>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/learning">View</Link>
-                </Button>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>Freelancing Masterclass</span>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/learning">View</Link>
-                </Button>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>Investment Strategies 101</span>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/learning">View</Link>
-                </Button>
-              </li>
-            </ul>
-            <Button asChild className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href="/learning">Explore All Courses</Link>
-            </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </section>
         
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 font-headline">
-              <Briefcase className="h-6 w-6" />
-              Hot Job Opportunities
-            </CardTitle>
-            <CardDescription>Discover relevant job openings.</CardDescription>
-          </CardHeader>
-          <CardContent>
-             <ul className="space-y-3">
-              <li className="flex items-center justify-between">
-                <span>Remote UX Designer</span>
-                <Button variant="outline" size="sm" asChild>
-                 <Link href="/jobs">Details</Link>
-                </Button>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>AI Prompt Engineer</span>
-                <Button variant="outline" size="sm" asChild>
-                 <Link href="/jobs">Details</Link>
-                </Button>
-              </li>
-              <li className="flex items-center justify-between">
-                <span>Content Marketing Specialist</span>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href="/jobs">Details</Link>
-                </Button>
-              </li>
-            </ul>
-            <Button asChild className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
-                <Link href="/jobs">Browse All Jobs</Link>
+        {/* Call to Action Section */}
+        <section className="container mx-auto py-16 md:py-24 px-4 md:px-6 text-center">
+           <div className="max-w-2xl mx-auto">
+             <TrendingUp className="h-16 w-16 text-primary mx-auto mb-6" />
+            <h3 className="text-3xl font-bold font-headline mb-6">¿Listo para transformar tu futuro financiero?</h3>
+            <p className="text-lg text-muted-foreground mb-8">
+              Únete a ProsperIA hoy mismo y comienza a construir el camino hacia tus metas económicas con el poder de la inteligencia artificial.
+            </p>
+            <Button size="lg" asChild className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6 px-8">
+              <Link href="/upgrade">Ver Planes Premium</Link>
             </Button>
-          </CardContent>
-        </Card>
-      </div>
-    </AppLayout>
+           </div>
+        </section>
+      </main>
+
+      <footer className="container mx-auto py-8 px-4 md:px-6 text-center text-muted-foreground border-t">
+        <p>&copy; {new Date().getFullYear()} Lucas Leandro Guzmán - ProsperIA. Todos los derechos reservados.</p>
+        <div className="mt-2 space-x-4">
+            <Link href="mailto:ProsperIApro2025@gmail.com" className="hover:text-primary">Email</Link>
+            <Link href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="hover:text-primary">WhatsApp</Link>
+        </div>
+      </footer>
+    </div>
   );
 }
