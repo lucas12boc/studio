@@ -21,9 +21,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -41,7 +39,7 @@ export function SidebarNav() {
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2">
           <Lightbulb className="h-8 w-8 text-primary" />
-          <h1 className="text-xl font-semibold font-headline">Income Insights</h1>
+          <h1 className="text-xl font-semibold font-headline">ProsperIA</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
@@ -49,10 +47,10 @@ export function SidebarNav() {
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
-                asChild
                 isActive={pathname === item.href}
                 tooltip={item.label}
                 className="justify-start"
+                asChild
               >
                 <Link href={item.href}>
                   <item.icon className="h-5 w-5" />
@@ -63,9 +61,11 @@ export function SidebarNav() {
           ))}
         </SidebarMenu>
       </SidebarContent>
-      <SidebarFooter className="p-4">
-        {/* You can add footer items here if needed, like a settings link or user profile */}
-        <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Income Insights AI</p>
+      <SidebarFooter className="p-4 space-y-2">
+        <p className="text-xs text-muted-foreground">
+          Contact: <a href="mailto:tu-email@ejemplo.com" className="underline hover:text-primary">tu-email@ejemplo.com</a>
+        </p>
+        <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ProsperIA</p>
       </SidebarFooter>
     </Sidebar>
   );

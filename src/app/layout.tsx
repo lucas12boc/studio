@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Income Insights AI',
+  title: 'ProsperIA',
   description: 'Generate personalized income strategies with AI.',
 };
 
