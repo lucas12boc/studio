@@ -68,7 +68,7 @@ export function SidebarNav() {
         <p className="text-xs text-muted-foreground">
           WhatsApp: <a href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">+54 2257405607</a>
         </p>
-        <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ProsperIA</p>
+        <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Lucas Leandro Guzmán - ProsperIA</p>
       </SidebarFooter>
     </Sidebar>
   );
