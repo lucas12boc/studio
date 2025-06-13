@@ -63,7 +63,7 @@ export function SidebarNav() {
       </SidebarContent>
       <SidebarFooter className="p-4 space-y-2">
         <p className="text-xs text-muted-foreground">
-          Contact: <a href="mailto:tu-email@ejemplo.com" className="underline hover:text-primary">tu-email@ejemplo.com</a>
+          Contact: <a href="mailto:ProsperIApro2025@gmail.com" className="underline hover:text-primary">ProsperIApro2025@gmail.com</a>
         </p>
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ProsperIA</p>
       </SidebarFooter>
