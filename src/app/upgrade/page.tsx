@@ -4,7 +4,7 @@
 import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Zap, BarChart2, BookOpen, Briefcase, Star } from "lucide-react";
+import { CheckCircle, Zap, BarChart2, BookOpen, Briefcase, Star, Info } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,12 +63,28 @@ export default function UpgradePage() {
 
             <div className="text-center mt-8">
               <p className="text-4xl font-bold mb-2 text-primary">$9.99<span className="text-lg font-normal text-muted-foreground">/mes</span></p>
-              <p className="text-sm text-muted-foreground mb-6">Cancela en cualquier momento. Sin compromisos a largo plazo.</p>
-              <Button asChild size="lg" className="w-full max-w-xs bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6">
-                <Link href="#"> {/* Reemplaza # con tu enlace de pago cuando lo tengas */}
+              <div className="my-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-700">
+                <div className="flex items-center gap-2 mb-2">
+                  <Info className="h-5 w-5" />
+                  <h4 className="font-semibold">Instrucciones de Pago (Prototipo)</h4>
+                </div>
+                <p className="text-sm">
+                  Para activar Premium, por favor realiza el pago usando el siguiente alias:
+                </p>
+                <p className="font-mono bg-blue-100 p-2 my-2 rounded text-center text-blue-800">[TU ALIAS DE PAGO AQUÍ]</p>
+                <p className="text-sm">
+                  Una vez realizado el pago, contáctanos a <a href="mailto:ProsperIApro2025@gmail.com" className="underline font-medium">ProsperIApro2025@gmail.com</a> para activar tu cuenta.
+                </p>
+                 <p className="text-xs mt-3 text-muted-foreground">
+                  (Nota: Este es un sistema manual para el prototipo. En una versión final, la activación sería automática.)
+                </p>
+              </div>
+              <Button asChild size="lg" className="w-full max-w-xs bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6 mt-4">
+                <Link href="#"> {/* Reemplaza # con tu enlace de pago real si lo tienes, o déjalo para indicar que el flujo es manual */}
                   ¡Actualizar Ahora y Prosperar!
                 </Link>
               </Button>
+               <p className="text-sm text-muted-foreground mt-6">Cancela en cualquier momento. Sin compromisos a largo plazo.</p>
             </div>
 
             <div className="mt-10 text-center">
