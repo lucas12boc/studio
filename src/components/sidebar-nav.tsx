@@ -63,7 +63,10 @@ export function SidebarNav() {
       </SidebarContent>
       <SidebarFooter className="p-4 space-y-2">
         <p className="text-xs text-muted-foreground">
-          Contact: <a href="mailto:ProsperIApro2025@gmail.com" className="underline hover:text-primary">ProsperIApro2025@gmail.com</a>
+          Email: <a href="mailto:ProsperIApro2025@gmail.com" className="underline hover:text-primary">ProsperIApro2025@gmail.com</a>
+        </p>
+        <p className="text-xs text-muted-foreground">
+          WhatsApp: <a href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">+54 2257405607</a>
         </p>
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ProsperIA</p>
       </SidebarFooter>
