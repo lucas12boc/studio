@@ -10,7 +10,7 @@ import {
   Briefcase,
   ListChecks,
   BotMessageSquare,
-  Star, // Added Star icon
+  Star,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -48,6 +48,7 @@ export function SidebarNav() {
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
+                asChild
                 isActive={pathname === item.href}
                 tooltip={item.label}
                 className="justify-start"
@@ -61,15 +62,16 @@ export function SidebarNav() {
           ))}
         </SidebarMenu>
         
-        {/* Upgrade to Premium Button Section */}
         <div className="p-2 mt-auto">
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
+                asChild
+                isActive={pathname === "/upgrade"}
                 tooltip="Unlock all features"
                 className="justify-start bg-accent hover:bg-accent/90 text-accent-foreground"
               >
-                <Link href="#"> {/* Placeholder link for now */}
+                <Link href="/upgrade">
                   <Star className="h-5 w-5" />
                   <span>Upgrade to Premium</span>
                 </Link>
