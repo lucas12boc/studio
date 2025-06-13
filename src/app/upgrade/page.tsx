@@ -4,7 +4,7 @@
 import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Zap, BarChart2, BookOpen, Briefcase, Star, Info } from "lucide-react";
+import { CheckCircle, Zap, BarChart2, BookOpen, Briefcase, Star, Info, CreditCard } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -63,24 +63,25 @@ export default function UpgradePage() {
 
             <div className="text-center mt-8">
               <p className="text-4xl font-bold mb-2 text-primary">$9.99<span className="text-lg font-normal text-muted-foreground">/mes</span></p>
-              <div className="my-4 p-4 bg-blue-50 border border-blue-200 rounded-lg text-blue-700">
+              
+              <div className="my-6 p-4 bg-primary/10 border border-primary/30 rounded-lg text-primary">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5" />
-                  <h4 className="font-semibold">Instrucciones de Pago (Prototipo)</h4>
+                  <CreditCard className="h-5 w-5" />
+                  <h4 className="font-semibold">Proceso de Pago</h4>
                 </div>
                 <p className="text-sm">
-                  Para activar Premium, por favor realiza el pago usando el siguiente alias:
+                  Haz clic en el botón de abajo para ser redirigido a nuestra plataforma de pago segura.
                 </p>
-                <p className="font-mono bg-blue-100 p-2 my-2 rounded text-center text-blue-800">[TU ALIAS DE PAGO AQUÍ]</p>
-                <p className="text-sm">
-                  Una vez realizado el pago, contáctanos a <a href="mailto:ProsperIApro2025@gmail.com" className="underline font-medium">ProsperIApro2025@gmail.com</a> para activar tu cuenta.
+                <p className="text-xs mt-3 text-muted-foreground">
+                  Una vez completado el pago, tu cuenta Premium se activará. Si tienes algún inconveniente, contáctanos a <a href="mailto:ProsperIApro2025@gmail.com" className="underline font-medium">ProsperIApro2025@gmail.com</a>.
                 </p>
                  <p className="text-xs mt-3 text-muted-foreground">
-                  (Nota: Este es un sistema manual para el prototipo. En una versión final, la activación sería automática.)
+                  (Nota: En este prototipo, la activación puede requerir confirmación manual. En una versión final, sería automática tras el pago.)
                 </p>
               </div>
+
               <Button asChild size="lg" className="w-full max-w-xs bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6 mt-4">
-                <Link href="#"> {/* Reemplaza # con tu enlace de pago real si lo tienes, o déjalo para indicar que el flujo es manual */}
+                <Link href="https://app.takenos.com/pay/7ee97114-167c-4038-81b6-d84cb5283d0c" target="_blank" rel="noopener noreferrer">
                   ¡Actualizar Ahora y Prosperar!
                 </Link>
               </Button>
