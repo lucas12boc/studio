@@ -4,7 +4,7 @@
 import { AppLayout } from "@/components/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart, TrendingUp, DollarSign, Target, CheckCircle, GraduationCap, Briefcase } from "lucide-react";
+import { BarChart as LucideBarChart, TrendingUp, DollarSign, Target, CheckCircle, GraduationCap, Briefcase } from "lucide-react";
 import Link from "next/link";
 import {
   ChartContainer,
@@ -13,7 +13,7 @@ import {
   ChartLegend,
   ChartLegendContent,
 } from "@/components/ui/chart";
-import { Bar, CartesianGrid, XAxis, YAxis, ResponsiveContainer, LabelList } from "recharts";
+import { BarChart, Bar, CartesianGrid, XAxis, YAxis, LabelList } from "recharts";
 import Image from "next/image";
 
 const chartData = [
@@ -44,28 +44,26 @@ export default function DashboardPage() {
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 font-headline">
-              <BarChart className="h-6 w-6" />
+              <LucideBarChart className="h-6 w-6" />
               Income Overview
             </CardTitle>
             <CardDescription>Visualize your potential income streams and progress.</CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData} margin={{ top: 20, right: 0, left: -20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                  <Bar dataKey="income" fill="var(--color-income)" radius={4}>
-                     <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
-                  </Bar>
-                  <Bar dataKey="expenses" fill="var(--color-expenses)" radius={4}>
-                     <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+              <BarChart data={chartData} margin={{ top: 20, right: 0, left: -20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
+                <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <ChartLegend content={<ChartLegendContent />} />
+                <Bar dataKey="income" fill="var(--color-income)" radius={4}>
+                   <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
+                </Bar>
+                <Bar dataKey="expenses" fill="var(--color-expenses)" radius={4}>
+                   <LabelList position="top" offset={5} className="fill-foreground" fontSize={12} />
+                </Bar>
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
@@ -110,7 +108,7 @@ export default function DashboardPage() {
             <p className="mb-4 text-muted-foreground">
               Let our AI analyze your profile and suggest the best income streams for you.
             </p>
-            <Link href="/strategy" passHref>
+            <Link href="/strategy">
               <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                 Generate Strategy
               </Button>
@@ -130,18 +128,18 @@ export default function DashboardPage() {
             <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Advanced Digital Marketing</span>
-                <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
+                <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Freelancing Masterclass</span>
-                <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
+                <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Investment Strategies 101</span>
-                 <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
+                 <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
               </li>
             </ul>
-             <Link href="/learning" passHref>
+             <Link href="/learning">
                 <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
                     Explore All Courses
                 </Button>
@@ -161,18 +159,18 @@ export default function DashboardPage() {
              <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Remote UX Designer</span>
-                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>AI Prompt Engineer</span>
-                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Content Marketing Specialist</span>
-                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
               </li>
             </ul>
-             <Link href="/jobs" passHref>
+             <Link href="/jobs">
                 <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
                     Browse All Jobs
                 </Button>
