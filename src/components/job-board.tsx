@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { JobListing } from "@/lib/types";
@@ -13,7 +14,7 @@ const placeholderJobs: JobListing[] = [
     title: "AI Ethics Specialist",
     company: "FutureTech Inc.",
     location: "Remote",
-    url: "#",
+    url: "https://www.linkedin.com/jobs/search/?keywords=AI%20Ethics%20Specialist", // URL Real
     description: "Develop and implement ethical guidelines for AI products. Strong background in ethics and AI required.",
     category: "AI & Ethics",
     icon: Briefcase,
@@ -23,7 +24,7 @@ const placeholderJobs: JobListing[] = [
     title: "Senior UX Researcher",
     company: "Innovate Solutions",
     location: "New York, NY",
-    url: "#",
+    url: "https://www.linkedin.com/jobs/search/?keywords=Senior%20UX%20Researcher", // URL Real
     description: "Lead user research initiatives to inform product design and strategy for cutting-edge tech products.",
     category: "UX & Design",
     icon: Briefcase,
@@ -33,7 +34,7 @@ const placeholderJobs: JobListing[] = [
     title: "Blockchain Developer",
     company: "CryptoChain Ltd.",
     location: "Austin, TX (Hybrid)",
-    url: "#",
+    url: "#", // Marcador de posición
     description: "Design, implement, and support blockchain-based applications and smart contracts.",
     category: "Web3",
     icon: Briefcase,
@@ -43,7 +44,7 @@ const placeholderJobs: JobListing[] = [
     title: "Renewable Energy Analyst",
     company: "GreenPower Co.",
     location: "San Francisco, CA",
-    url: "#",
+    url: "#", // Marcador de posición
     description: "Analyze market trends and policy changes in the renewable energy sector to guide investment decisions.",
     category: "Sustainability",
     icon: Briefcase,
@@ -53,7 +54,7 @@ const placeholderJobs: JobListing[] = [
     title: "Cloud Solutions Architect",
     company: "SkyHigh Cloud Services",
     location: "Remote",
-    url: "#",
+    url: "#", // Marcador de posición
     description: "Design and deploy scalable, secure, and robust cloud solutions for enterprise clients.",
     category: "Cloud Computing",
     icon: Briefcase,
@@ -63,7 +64,7 @@ const placeholderJobs: JobListing[] = [
     title: "Cybersecurity Engineer",
     company: "SecureNet Systems",
     location: "Washington D.C.",
-    url: "#",
+    url: "#", // Marcador de posición
     description: "Protect company assets by identifying and mitigating security vulnerabilities.",
     category: "Cybersecurity",
     icon: Briefcase,
