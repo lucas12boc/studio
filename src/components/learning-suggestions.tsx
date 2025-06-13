@@ -12,7 +12,7 @@ const placeholderResources: LearningResource[] = [
     id: "1",
     title: "Advanced AI for Business Leaders",
     platform: "Coursera",
-    url: "https://www.coursera.org/learn/ai-for-everyone", // URL Real
+    url: "https://www.coursera.org/learn/ai-for-everyone", 
     description: "Understand AI's impact and learn to implement AI strategies in your business.",
     category: "AI & Business",
     icon: Laptop,
@@ -21,7 +21,7 @@ const placeholderResources: LearningResource[] = [
     id: "2",
     title: "Full-Stack Web Development Bootcamp",
     platform: "Udemy",
-    url: "#", // Marcador de posición
+    url: "https://www.udemy.com/course/the-complete-web-development-bootcamp/", 
     description: "Master front-end and back-end technologies to build complete web applications.",
     category: "Web Development",
     icon: Laptop,
@@ -30,7 +30,7 @@ const placeholderResources: LearningResource[] = [
     id: "3",
     title: "Digital Marketing Specialization",
     platform: "edX",
-    url: "#", // Marcador de posición
+    url: "https://www.edx.org/masters/micromasters/columbiax-digital-marketing", 
     description: "Learn SEO, content marketing, social media, and analytics to grow online presence.",
     category: "Marketing",
     icon: Briefcase,
@@ -39,7 +39,7 @@ const placeholderResources: LearningResource[] = [
     id: "4",
     title: "Financial Markets and Investment Strategy",
     platform: "Khan Academy",
-    url: "https://www.khanacademy.org/economics-finance-domain/core-finance", // URL Real
+    url: "https://www.khanacademy.org/economics-finance-domain/core-finance", 
     description: "Explore stocks, bonds, and other investment vehicles with expert guidance.",
     category: "Finance",
     icon: BookOpen,
@@ -48,7 +48,7 @@ const placeholderResources: LearningResource[] = [
     id: "5",
     title: "Data Science with Python",
     platform: "DataCamp",
-    url: "#", // Marcador de posición
+    url: "https://www.datacamp.com/tracks/data-scientist-with-python", 
     description: "Unlock insights from data using Python, Pandas, NumPy, and Scikit-learn.",
     category: "Data Science",
     icon: Laptop,
@@ -57,7 +57,7 @@ const placeholderResources: LearningResource[] = [
     id: "6",
     title: "Project Management Professional (PMP) Prep",
     platform: "LinkedIn Learning",
-    url: "#", // Marcador de posición
+    url: "https://www.linkedin.com/learning/paths/prepare-for-the-pmp-certification-exam", 
     description: "Prepare for the PMP certification and master project management principles.",
     category: "Project Management",
     icon: Briefcase,
