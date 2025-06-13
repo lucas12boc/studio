@@ -1,3 +1,4 @@
+
 "use client";
 
 import { AppLayout } from "@/components/app-layout";
@@ -109,7 +110,7 @@ export default function DashboardPage() {
             <p className="mb-4 text-muted-foreground">
               Let our AI analyze your profile and suggest the best income streams for you.
             </p>
-            <Link href="/strategy" legacyBehavior passHref>
+            <Link href="/strategy" passHref>
               <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                 Generate Strategy
               </Button>
@@ -129,18 +130,18 @@ export default function DashboardPage() {
             <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Advanced Digital Marketing</span>
-                <Link href="/learning" legacyBehavior passHref><Button variant="outline" size="sm">View</Button></Link>
+                <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Freelancing Masterclass</span>
-                <Link href="/learning" legacyBehavior passHref><Button variant="outline" size="sm">View</Button></Link>
+                <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Investment Strategies 101</span>
-                 <Link href="/learning" legacyBehavior passHref><Button variant="outline" size="sm">View</Button></Link>
+                 <Link href="/learning" passHref><Button variant="outline" size="sm">View</Button></Link>
               </li>
             </ul>
-             <Link href="/learning" legacyBehavior passHref>
+             <Link href="/learning" passHref>
                 <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
                     Explore All Courses
                 </Button>
@@ -160,18 +161,18 @@ export default function DashboardPage() {
              <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Remote UX Designer</span>
-                 <Link href="/jobs" legacyBehavior passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>AI Prompt Engineer</span>
-                 <Link href="/jobs" legacyBehavior passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
               </li>
               <li className="flex items-center justify-between">
                 <span>Content Marketing Specialist</span>
-                 <Link href="/jobs" legacyBehavior passHref><Button variant="outline" size="sm">Details</Button></Link>
+                 <Link href="/jobs" passHref><Button variant="outline" size="sm">Details</Button></Link>
               </li>
             </ul>
-             <Link href="/jobs" legacyBehavior passHref>
+             <Link href="/jobs" passHref>
                 <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
                     Browse All Jobs
                 </Button>
