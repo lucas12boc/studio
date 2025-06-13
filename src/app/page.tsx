@@ -108,11 +108,11 @@ export default function DashboardPage() {
             <p className="mb-4 text-muted-foreground">
               Let our AI analyze your profile and suggest the best income streams for you.
             </p>
-            <Link href="/strategy">
-              <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Link href="/strategy">
                 Generate Strategy
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </CardContent>
         </Card>
 
@@ -128,22 +128,26 @@ export default function DashboardPage() {
             <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Advanced Digital Marketing</span>
-                <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/learning">View</Link>
+                </Button>
               </li>
               <li className="flex items-center justify-between">
                 <span>Freelancing Masterclass</span>
-                <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/learning">View</Link>
+                </Button>
               </li>
               <li className="flex items-center justify-between">
                 <span>Investment Strategies 101</span>
-                 <Link href="/learning"><Button variant="outline" size="sm">View</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/learning">View</Link>
+                </Button>
               </li>
             </ul>
-             <Link href="/learning">
-                <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
-                    Explore All Courses
-                </Button>
-            </Link>
+            <Button asChild className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link href="/learning">Explore All Courses</Link>
+            </Button>
           </CardContent>
         </Card>
         
@@ -159,22 +163,26 @@ export default function DashboardPage() {
              <ul className="space-y-3">
               <li className="flex items-center justify-between">
                 <span>Remote UX Designer</span>
-                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                 <Link href="/jobs">Details</Link>
+                </Button>
               </li>
               <li className="flex items-center justify-between">
                 <span>AI Prompt Engineer</span>
-                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                 <Link href="/jobs">Details</Link>
+                </Button>
               </li>
               <li className="flex items-center justify-between">
                 <span>Content Marketing Specialist</span>
-                 <Link href="/jobs"><Button variant="outline" size="sm">Details</Button></Link>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/jobs">Details</Link>
+                </Button>
               </li>
             </ul>
-             <Link href="/jobs">
-                <Button className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
-                    Browse All Jobs
-                </Button>
-            </Link>
+            <Button asChild className="w-full mt-4 bg-accent hover:bg-accent/90 text-accent-foreground">
+                <Link href="/jobs">Browse All Jobs</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
