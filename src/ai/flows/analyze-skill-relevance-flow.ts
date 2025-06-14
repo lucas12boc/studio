@@ -51,12 +51,12 @@ const AnalyzeSkillRelevanceOutputSchema = z.object({
     .array(SuggestedItemSchema)
     .min(2)
     .max(3)
-    .describe('A list of 2 to 3 suggested course types or topics.'),
+    .describe('A list of 2 to 3 suggested course types or topics. Each item must be an object with "name" and "reason".'),
   suggestedJobRoles: z
     .array(SuggestedItemSchema)
     .min(2)
     .max(3)
-    .describe('A list of 2 to 3 suggested job roles where this skill is valuable.'),
+    .describe('A list of 2 to 3 suggested job roles where this skill is valuable. Each item must be an object with "name" and "reason".'),
 });
 export type AnalyzeSkillRelevanceOutput = z.infer<
   typeof AnalyzeSkillRelevanceOutputSchema
@@ -80,15 +80,16 @@ const prompt = ai.definePrompt({
   The user has not provided their current skills. Focus the synergy analysis on general complementarity.
   {{/if}}
 
-  Provide an analysis covering:
-  1.  Market Demand: Current market demand for {{{skillName}}}. Categorize as High, Medium, Low, or Emerging, and briefly explain.
-  2.  Synergy: {{#if userSkills}}How {{{skillName}}} complements or enhances the user's skills: {{{userSkills}}}.{{else}}General synergies of {{{skillName}}} with common professional skills.{{/if}}
-  3.  Income Impact Potential: Qualitatively describe how learning {{{skillName}}} could impact income potential.
-  4.  Suggested Courses: List 2 or 3 diverse course types or specific learning topics relevant to {{{skillName}}}. For each, provide a brief reason.
-  5.  Suggested Job Roles: List 2 or 3 diverse job roles where {{{skillName}}} is highly valued. For each, provide a brief reason.
+  Provide an analysis covering the following points. Your response MUST be a valid JSON object that strictly adheres to the AnalyzeSkillRelevanceOutputSchema. All fields in the schema are important.
 
-  Ensure the output strictly follows the AnalyzeSkillRelevanceOutputSchema.
-  The skillName in the output must be exactly "{{{skillName}}}".
+  1.  Market Demand for {{{skillName}}}: (Categorize as High, Medium, Low, or Emerging, and briefly explain).
+  2.  Synergy: ({{#if userSkills}}How {{{skillName}}} complements or enhances the user's skills: {{{userSkills}}}.{{else}}General synergies of {{{skillName}}} with common professional skills.{{/if}})
+  3.  Income Impact Potential: (Qualitatively describe how learning {{{skillName}}} could impact income potential).
+  4.  Suggested Courses: (A list of 2 to 3 diverse course types or specific learning topics relevant to {{{skillName}}}. Each item in this list MUST be an object with a 'name' field and a 'reason' field.)
+  5.  Suggested Job Roles: (A list of 2 to 3 diverse job roles where {{{skillName}}} is highly valued. Each item in this list MUST be an object with a 'name' field and a 'reason' field.)
+
+  The 'skillName' in the output JSON must be exactly "{{{skillName}}}".
+  The 'suggestedCourses' and 'suggestedJobRoles' fields must be arrays of objects, where each object contains 'name' and 'reason' string properties.
   `,
 });
 
