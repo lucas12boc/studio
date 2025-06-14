@@ -22,19 +22,10 @@ function SkillAnalysisDisplay({
 }) {
   if (isLoading) {
     return (
-      <Card key="skill-analyzer-loading" className="animate-pulse">
-        <CardHeader>
-          <div className="h-7 bg-muted rounded w-3/4"></div>
-          <div className="h-4 bg-muted rounded w-1/2 mt-2"></div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="space-y-2">
-              <div className="h-5 bg-muted rounded w-1/4"></div>
-              <div className="h-4 bg-muted rounded w-full"></div>
-              <div className="h-4 bg-muted rounded w-3/4"></div>
-            </div>
-          ))}
+      <Card key="skill-analyzer-loading-simple">
+        <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
+          <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
+          <p className="text-muted-foreground">Analyzing skill...</p>
         </CardContent>
       </Card>
     );
@@ -112,7 +103,7 @@ function SkillAnalysisDisplay({
 
   return (
     <Card key="skill-analyzer-placeholder" className="border-dashed border-primary/50 bg-primary/5">
-      <CardContent className="pt-6 text-center">
+      <CardContent className="pt-6 text-center min-h-[200px] flex flex-col items-center justify-center">
         <Lightbulb className="h-12 w-12 text-primary mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2 text-primary">Ready to Dive Deeper?</h3>
         <p className="text-muted-foreground">
