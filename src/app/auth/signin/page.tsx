@@ -41,7 +41,10 @@ export default function SignInPage() {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [formLoading, setFormLoading] = useState(false); 
 
-  // console.log("SignInPage Render: isFirebaseConfigured =", isFirebaseConfigured, "authLoading =", authLoading, "formLoading =", formLoading);
+  // useEffect(() => {
+  //   console.log("SignInPage Render: isFirebaseConfigured =", isFirebaseConfigured, "authLoading =", authLoading, "formLoading =", formLoading);
+  // },[isFirebaseConfigured, authLoading, formLoading]);
+
 
   const currentSchema = isSigningUp ? emailSignUpSchema : emailSignInSchema;
   const form = useForm<EmailSignInFormValues | EmailSignUpFormValues>({
@@ -153,11 +156,12 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent className="space-y-4 pb-4">
           {!isFirebaseConfigured && !authLoading && (
-            <div className="p-4 mb-4 text-sm text-destructive-foreground bg-destructive rounded-md flex items-center gap-3">
-              <AlertTriangle className="h-5 w-5" />
+            <div className="p-4 mb-4 text-sm text-destructive-foreground bg-destructive rounded-md flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-semibold">Error de Configuración de Firebase</p>
-                <p>La autenticación está deshabilitada. Por favor, verifica tu archivo <code>.env.local</code> y reinicia el servidor de desarrollo.</p>
+                <p className="font-semibold">Error Crítico de Configuración de Firebase</p>
+                <p>La autenticación está deshabilitada porque la aplicación no pudo cargar la configuración de Firebase (ej: API Key faltante).</p>
+                <p className="mt-1">Por favor, verifica que tu archivo <code>.env.local</code> en la raíz del proyecto esté correctamente configurado con las variables <code>NEXT_PUBLIC_FIREBASE_...</code> y luego reinicia el servidor de desarrollo.</p>
               </div>
             </div>
           )}
@@ -214,7 +218,7 @@ export default function SignInPage() {
             Google
           </Button>
           <Button variant="outline" className="w-full text-md py-6 flex items-center justify-center gap-2" disabled={true}>
-            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.256 15.3c-.363 1.192-1.295 2.624-2.528 2.624-1.258 0-1.74-.93-2.936-.93s-1.74.904-2.937.904c-1.207 0-2.31-.98-2.936-2.496-1.558-3.79.623-6.75 2.527-9.07C9.37 4.186 10.577 3 12 3c.026 0 .053 0 .079 0 .026-.002.053-.002.08-.002.025 0 .052 0 .078-.002s.053 0 .08 0c1.267 0 2.22.98 2.937 2.158 1.05 1.628 1.636 3.352 1.636 3.352s-1.89-.606-3.665-.553c-1.902 0-3.352 1.294-3.352 3.076s1.373 3.102 3.352 3.05 3.614-1.24 3.614-1.24a4.172 4.172 0 0 1 .146.467zM12.016.037C10.292.062 8.65.968 7.55 2.376c-2.47 3.253-.335 7.777 1.61 10.373.98.98 1.933 1.602 3.25 1.602 1.294 0 1.802-.676 3.225-.676s1.852.675 3.225.675c1.343 0 2.24-.702 3.194-1.602C23.99 9.93 24.576 4.38 22.052 2.04c-1.24-1.18-2.858-1.92-4.64-2.003A11.75 11.75 0 0 0 12.016.037z"></path></svg>
+            <Mail className="h-5 w-5" />
             Apple (Próximamente)
           </Button>
         </CardContent>
