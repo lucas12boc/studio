@@ -61,7 +61,7 @@ function SkillAnalysisDisplay({
             </h3>
             <ul className="space-y-3">
               {analysisResult.suggestedCourses.map((course, index) => (
-                <li key={`course-${index}-${course.name}`} className="p-3 border rounded-md bg-background/50">
+                <li key={`course-${index}-${course.name.replace(/\s+/g, '-')}`} className="p-3 border rounded-md bg-background/50">
                   <p className="font-medium">{course.name}</p>
                   <p className="text-sm text-muted-foreground">{course.reason}</p>
                 </li>
@@ -76,7 +76,7 @@ function SkillAnalysisDisplay({
             </h3>
             <ul className="space-y-3">
               {analysisResult.suggestedJobRoles.map((role, index) => (
-                <li key={`role-${index}-${role.name}`} className="p-3 border rounded-md bg-background/50">
+                <li key={`role-${index}-${role.name.replace(/\s+/g, '-')}`} className="p-3 border rounded-md bg-background/50">
                   <p className="font-medium">{role.name}</p>
                   <p className="text-sm text-muted-foreground">{role.reason}</p>
                 </li>
@@ -132,7 +132,7 @@ export default function SkillAnalyzerPage() {
         description: error instanceof Error ? error.message : "Could not analyze the skill. Please try again later.",
         variant: "destructive",
       });
-      setAnalysisResult(null);
+      setAnalysisResult(null); // Explicitly set to null on error
     } finally {
       setIsLoading(false);
     }
@@ -140,7 +140,7 @@ export default function SkillAnalyzerPage() {
 
   const getDisplaySectionKey = () => {
     if (isLoading) return 'loading-section';
-    if (analysisResult) return 'results-section';
+    if (analysisResult && typeof analysisResult === 'object' && analysisResult.skillName) return `results-section-${analysisResult.skillName.replace(/\s+/g, '-')}`;
     return 'placeholder-section';
   };
 
@@ -198,16 +198,19 @@ export default function SkillAnalyzerPage() {
         </Card>
 
         <div className="md:col-span-2 space-y-6">
-          <div key={getDisplaySectionKey()}>
+          <div key={getDisplaySectionKey()}> {/* Outer key based on overall state (loading, results, placeholder) */}
             {isLoading ? (
-              <Card>
+              <Card key="loading-card-instance"> {/* Instance key for loading card */}
                 <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
                   <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
                   <p className="text-muted-foreground">Analizando habilidad...</p>
                 </CardContent>
               </Card>
             ) : (
+              // SkillAnalysisDisplay itself gets a key based on whether it's showing results or placeholder
+              // This forces it to re-mount when switching between placeholder and results.
               <SkillAnalysisDisplay
+                key={analysisResult ? `display-results-${analysisResult.skillName.replace(/\s+/g, '-')}` : 'display-placeholder'}
                 analysisResult={analysisResult}
               />
             )}
