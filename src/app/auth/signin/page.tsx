@@ -27,7 +27,7 @@ const emailSignUpSchema = z.object({
   confirmPassword: z.string().min(6, { message: 'La contraseña debe tener al menos 6 caracteres.' }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Las contraseñas no coinciden.",
-  path: ["confirmPassword"], // path of error
+  path: ["confirmPassword"], 
 });
 
 
@@ -39,7 +39,11 @@ export default function SignInPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [formLoading, setFormLoading] = useState(false);
+  const [formLoading, setFormLoading] = useState(false); // For email form submission
+
+  // Debug logs
+  // console.log("SignInPage Render: isFirebaseConfigured =", isFirebaseConfigured, "authLoading =", authLoading, "formLoading =", formLoading);
+
 
   const currentSchema = isSigningUp ? emailSignUpSchema : emailSignInSchema;
   const form = useForm<EmailSignInFormValues | EmailSignUpFormValues>({
@@ -51,7 +55,6 @@ export default function SignInPage() {
     },
   });
 
-  // Reset form when switching modes
   useEffect(() => {
     form.reset({
       email: '',
@@ -59,30 +62,34 @@ export default function SignInPage() {
       ...(isSigningUp && { confirmPassword: '' }),
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSigningUp]);
+  }, [isSigningUp, form.reset]);
 
 
   useEffect(() => {
     if (!authLoading && user) {
+      // console.log("SignInPage: User detected, redirecting to /dashboard");
       router.push('/dashboard');
     }
   }, [user, authLoading, router]);
 
   const handleGoogleSignIn = async () => {
+    // console.log("SignInPage: handleGoogleSignIn called. isFirebaseConfigured =", isFirebaseConfigured);
     if (!isFirebaseConfigured) {
       toast({ title: "Error de Configuración", description: "Firebase no está configurado. Contacta al administrador.", variant: "destructive" });
       return;
     }
     try {
       await signInWithGoogle();
-      // Redirect is handled by useEffect
+      // Redirect is handled by useEffect after onAuthStateChanged updates user state
     } catch (error) {
       const authError = error as AuthError;
-      toast({ title: "Error de Inicio de Sesión", description: authError.message || "No se pudo iniciar sesión con Google.", variant: "destructive" });
+      // console.error("SignInPage: Google Sign-In error caught in component:", authError);
+      toast({ title: "Error de Inicio de Sesión con Google", description: authError.message || "No se pudo iniciar sesión con Google.", variant: "destructive" });
     }
   };
 
   const handleEmailFormSubmit = async (values: EmailSignInFormValues | EmailSignUpFormValues) => {
+    // console.log("SignInPage: handleEmailFormSubmit called. isFirebaseConfigured =", isFirebaseConfigured, "isSigningUp =", isSigningUp);
     if (!isFirebaseConfigured) {
       toast({ title: "Error de Configuración", description: "Firebase no está configurado.", variant: "destructive" });
       return;
@@ -98,13 +105,17 @@ export default function SignInPage() {
         result = await signInWithEmailPassword(signInValues.email, signInValues.password);
       }
 
-      if ('code' in result) { // It's an AuthError
+      // console.log("SignInPage: Email auth result:", result);
+
+      if (result && 'code' in result && typeof result.code === 'string') { // It's an AuthError
         toast({ title: isSigningUp ? "Error de Registro" : "Error de Inicio de Sesión", description: result.message || "Ocurrió un error.", variant: "destructive" });
       } else {
         // Successful sign-in/up will trigger useEffect for redirect
         toast({ title: isSigningUp ? "Registro Exitoso" : "Inicio de Sesión Exitoso", description: "Redirigiendo al dashboard..." });
       }
-    } catch (error) { // Should not happen if context handles errors, but as a fallback
+    } catch (error) { 
+      // This catch is a fallback, context should ideally return AuthError objects
+      // console.error("SignInPage: Email Sign-In/Up unexpected error caught in component:", error);
       const authError = error as AuthError;
       toast({ title: "Error Inesperado", description: authError.message || "Ocurrió un error inesperado.", variant: "destructive" });
     } finally {
@@ -112,9 +123,10 @@ export default function SignInPage() {
     }
   };
   
+  // Combined loading state for disabling UI elements
   const isLoading = authLoading || formLoading;
 
-  if (authLoading && !user) { // Show loading only if not already logged in
+  if (authLoading && !user && isFirebaseConfigured) { 
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-background to-blue-100 p-4">
         <Lightbulb className="h-16 w-16 text-primary animate-pulse mx-auto mb-4" />
@@ -123,7 +135,7 @@ export default function SignInPage() {
     );
   }
   
-  if (user && !authLoading) { // If user is defined after loading, redirect (handled by useEffect, but this is a fallback UI)
+  if (user && !authLoading) { 
       return (
          <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-background to-blue-100 p-4">
             <Lightbulb className="h-16 w-16 text-primary animate-pulse mx-auto mb-4" />
@@ -147,23 +159,23 @@ export default function SignInPage() {
           <form onSubmit={form.handleSubmit(handleEmailFormSubmit)} className="space-y-4">
             <div>
               <Label htmlFor="email">Correo Electrónico</Label>
-              <Input id="email" type="email" placeholder="tu@correo.com" {...form.register('email')} disabled={isLoading} />
+              <Input id="email" type="email" placeholder="tu@correo.com" {...form.register('email')} disabled={isLoading || !isFirebaseConfigured} />
               {form.formState.errors.email && <p className="text-xs text-destructive mt-1">{form.formState.errors.email.message}</p>}
             </div>
             <div>
               <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="••••••••" {...form.register('password')} disabled={isLoading} />
+              <Input id="password" type="password" placeholder="••••••••" {...form.register('password')} disabled={isLoading || !isFirebaseConfigured} />
               {form.formState.errors.password && <p className="text-xs text-destructive mt-1">{form.formState.errors.password.message}</p>}
             </div>
             {isSigningUp && (
               <div>
                 <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
-                <Input id="confirmPassword" type="password" placeholder="••••••••" {...form.register('confirmPassword' as keyof EmailSignUpFormValues)} disabled={isLoading} />
+                <Input id="confirmPassword" type="password" placeholder="••••••••" {...form.register('confirmPassword' as keyof EmailSignUpFormValues)} disabled={isLoading || !isFirebaseConfigured} />
                  {form.formState.errors.confirmPassword && <p className="text-xs text-destructive mt-1">{(form.formState.errors.confirmPassword as any).message}</p>}
               </div>
             )}
             <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-md py-6" disabled={isLoading || !isFirebaseConfigured}>
-              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : (isSigningUp ? <UserPlus className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />)}
+              {isLoading && form.formState.isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : (isSigningUp ? <UserPlus className="h-5 w-5 mr-2" /> : <LogIn className="h-5 w-5 mr-2" />)}
               {isSigningUp ? 'Crear Cuenta' : 'Iniciar Sesión'}
             </Button>
           </form>
@@ -185,7 +197,7 @@ export default function SignInPage() {
             className="w-full text-md py-6 flex items-center justify-center gap-2"
             disabled={isLoading || !isFirebaseConfigured}
           >
-            {isLoading && form.formState.isSubmitting && !form.getValues('email') ? <Loader2 className="h-5 w-5 animate-spin" /> : (
+            {isLoading && !form.formState.isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : ( // Show loader if global auth is loading, not specific to email form
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
