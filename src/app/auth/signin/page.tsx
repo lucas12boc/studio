@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useAuth } from '@/contexts/auth-context';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Lightbulb, LogIn } from 'lucide-react'; // Using Lightbulb for consistency
+import { Lightbulb, Mail } from 'lucide-react'; // Using Lightbulb for consistency, added Mail
 
 export default function SignInPage() {
   const { user, signInWithGoogle, loading } = useAuth();
@@ -54,7 +54,7 @@ export default function SignInPage() {
           <Button
             onClick={signInWithGoogle}
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground text-md py-6 flex items-center justify-center gap-2"
-            disabled={loading}
+            disabled={loading || !useAuth().isFirebaseConfigured} // Disable if Firebase isn't configured
           >
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -64,12 +64,13 @@ export default function SignInPage() {
             </svg>
             Continuar con Google
           </Button>
-          <Button variant="outline" className="w-full text-md py-6" disabled={true}>
-            {/* Apple Icon could be added here */}
+          <Button variant="outline" className="w-full text-md py-6 flex items-center justify-center gap-2" disabled={true}>
+            {/* Apple Icon could be an SVG or similar if desired in future */}
+            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.256 15.3c-.363 1.192-1.295 2.624-2.528 2.624-1.258 0-1.74-.93-2.936-.93s-1.74.904-2.937.904c-1.207 0-2.31-.98-2.936-2.496-1.558-3.79.623-6.75 2.527-9.07C9.37 4.186 10.577 3 12 3c.026 0 .053 0 .079 0 .026-.002.053-.002.08-.002.025 0 .052 0 .078-.002s.053 0 .08 0c1.267 0 2.22.98 2.937 2.158 1.05 1.628 1.636 3.352 1.636 3.352s-1.89-.606-3.665-.553c-1.902 0-3.352 1.294-3.352 3.076s1.373 3.102 3.352 3.05 3.614-1.24 3.614-1.24a4.172 4.172 0 0 1 .146.467zM12.016.037C10.292.062 8.65.968 7.55 2.376c-2.47 3.253-.335 7.777 1.61 10.373.98.98 1.933 1.602 3.25 1.602 1.294 0 1.802-.676 3.225-.676s1.852.675 3.225.675c1.343 0 2.24-.702 3.194-1.602C23.99 9.93 24.576 4.38 22.052 2.04c-1.24-1.18-2.858-1.92-4.64-2.003A11.75 11.75 0 0 0 12.016.037z"></path></svg>
             Continuar con Apple (Próximamente)
           </Button>
-          <Button variant="outline" className="w-full text-md py-6" disabled={true}>
-            {/* Email Icon could be added here */}
+          <Button variant="outline" className="w-full text-md py-6 flex items-center justify-center gap-2" disabled={true}>
+            <Mail className="h-5 w-5" />
             Continuar con Correo (Próximamente)
           </Button>
         </CardContent>
