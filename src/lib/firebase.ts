@@ -12,48 +12,35 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 let app: ReturnType<typeof initializeApp> | undefined = undefined;
-let authInstance: Auth | null = null; // Initialize as null
+let authInstance: Auth | null = null;
 
 if (typeof window !== 'undefined') {
   // This block runs only on the client-side
-  // console.log("Firebase Config Being Used (client-side):", {
-  //   apiKey: firebaseConfig.apiKey ? '********' : undefined, // Don't log actual key
-  //   authDomain: firebaseConfig.authDomain,
-  //   projectId: firebaseConfig.projectId,
-  //   storageBucket: firebaseConfig.storageBucket,
-  //   messagingSenderId: firebaseConfig.messagingSenderId,
-  //   appId: firebaseConfig.appId,
-  // });
-
   if (!firebaseConfig.apiKey) {
     console.error("CRITICAL Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Firebase will not be initialized. Please check your .env.local file in the project root and ensure it's correctly formatted and that you've restarted the development server.");
-    // app remains undefined, authInstance remains null
+  } else if (!firebaseConfig.authDomain || !firebaseConfig.projectId || !firebaseConfig.appId) {
+    // Check for other essential Firebase config values
+    console.error("CRITICAL Firebase Error: One or more essential Firebase config values (authDomain, projectId, appId) are missing or undefined. Firebase will not be initialized correctly. Please check your .env.local file and ensure all NEXT_PUBLIC_FIREBASE_... variables are correctly set.");
   } else {
-    // Proceed with initialization only if API key is present
+    // Proceed with initialization only if essential keys are present
     if (!getApps().length) {
       try {
         app = initializeApp(firebaseConfig);
-        // console.log("Firebase App initialized successfully.");
       } catch (e) {
         console.error("Error initializing Firebase App:", e);
         app = undefined; // Ensure app is undefined on error
       }
     } else {
       app = getApp();
-      // console.log("Firebase App instance retrieved.");
     }
 
     if (app) {
       try {
         authInstance = getAuth(app);
-        // console.log("Firebase Auth instance retrieved successfully.");
       } catch (e) {
         console.error("Error getting Firebase Auth instance:", e);
         authInstance = null; // Ensure authInstance is null on error
       }
-    } else {
-      // console.error("Firebase App was not initialized (likely due to missing API key or other config issue), so Firebase Auth cannot be initialized.");
-      // authInstance remains null
     }
   }
 }

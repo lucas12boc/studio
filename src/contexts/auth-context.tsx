@@ -32,46 +32,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const isFirebaseConfigured = !!auth; 
+  const isFirebaseConfigured = !!auth;
 
   useEffect(() => {
-    // console.log("AuthContext: isFirebaseConfigured =", isFirebaseConfigured, "Auth instance:", auth);
-    if (!isFirebaseConfigured || !auth) { 
-      // console.warn("AuthContext: Firebase is not configured (auth instance is null). Authentication features will be disabled.");
+    if (!isFirebaseConfigured || !auth) {
       setLoading(false);
       setUser(null);
-      return () => {}; 
+      return () => {};
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("AuthContext: onAuthStateChanged triggered. User:", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
     return () => unsubscribe();
-  }, [isFirebaseConfigured]); 
+  }, [isFirebaseConfigured]);
 
   const signInWithGoogle = async () => {
     if (!isFirebaseConfigured || !auth) {
-      // console.error("AuthContext: signInWithGoogle - Firebase is not configured.");
-      setLoading(false); 
-      throw new Error("Firebase no está configurado. Revisa tus variables de entorno (.env.local) y reinicia el servidor.");
+      console.error("AuthContext: signInWithGoogle - Firebase is not configured.");
+      setLoading(false);
+      throw new Error("Firebase no está configurado. Revisa tus variables de entorno y la configuración del proyecto.");
     }
     const provider = new GoogleAuthProvider();
     try {
       setLoading(true);
       await signInWithPopup(auth, provider);
-      // Successful sign-in will trigger onAuthStateChanged, which updates user and loading state
+      // Successful sign-in will trigger onAuthStateChanged
     } catch (error) {
-      // console.error("AuthContext: Error signing in with Google:", error);
+      console.error("AuthContext: Full error during signInWithPopup:", error); // Log the full error object
       setLoading(false);
-      throw error; 
+      throw error;
     }
   };
 
   const signUpWithEmailPassword = async (email: string, pass: string): Promise<User | AuthError> => {
     if (!isFirebaseConfigured || !auth) {
-      // console.error("AuthContext: signUpWithEmailPassword - Firebase is not configured.");
       setLoading(false);
       const authError: AuthError = { code: "auth/internal-error", message:"Firebase no está configurado.", name: "FirebaseError" };
       return authError;
@@ -79,10 +75,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      // Successful sign-up will trigger onAuthStateChanged
       return userCredential.user;
     } catch (error) {
-      // console.error("AuthContext: Error signing up with email and password:", error);
       setLoading(false);
       return error as AuthError;
     }
@@ -90,7 +84,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithEmailPassword = async (email: string, pass: string): Promise<User | AuthError> => {
     if (!isFirebaseConfigured || !auth) {
-      // console.error("AuthContext: signInWithEmailPassword - Firebase is not configured.");
       setLoading(false);
       const authError: AuthError = { code: "auth/internal-error", message:"Firebase no está configurado.", name: "FirebaseError" };
       return authError;
@@ -98,10 +91,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      // Successful sign-in will trigger onAuthStateChanged
       return userCredential.user;
     } catch (error) {
-      // console.error("AuthContext: Error signing in with email and password:", error);
       setLoading(false);
       return error as AuthError;
     }
@@ -109,20 +100,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     if (!isFirebaseConfigured || !auth) {
-      // console.error("AuthContext: signOut - Firebase is not configured.");
-      setUser(null); 
+      setUser(null);
       setLoading(false);
-      router.push('/auth/signin'); 
+      router.push('/auth/signin');
       return;
     }
     try {
       setLoading(true);
       await firebaseSignOut(auth);
-      // onAuthStateChanged will set user to null
       router.push('/auth/signin');
     } catch (error) {
-      // console.error("AuthContext: Error signing out:", error);
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
