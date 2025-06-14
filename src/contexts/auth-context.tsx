@@ -32,15 +32,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const isFirebaseConfigured = !!auth; // This will be false if auth from firebase.ts is null
+  // isFirebaseConfigured is true if the auth object from firebase.ts is not null
+  const isFirebaseConfigured = !!auth; 
 
   useEffect(() => {
     // console.log("AuthContext: isFirebaseConfigured =", isFirebaseConfigured, "Auth instance:", auth);
-    if (!isFirebaseConfigured || !auth) {
+    if (!isFirebaseConfigured || !auth) { // Ensure auth is also checked here
       // console.warn("AuthContext: Firebase is not configured (auth instance is null). Authentication features will be disabled.");
       setLoading(false);
       setUser(null);
-      return; 
+      return () => {}; // Return an empty function for cleanup
     }
 
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -49,7 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     });
     return () => unsubscribe();
-  }, [isFirebaseConfigured]); 
+  }, [isFirebaseConfigured]); // Depend on isFirebaseConfigured
 
   const signInWithGoogle = async () => {
     if (!isFirebaseConfigured || !auth) {
@@ -65,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
       // console.error("AuthContext: Error signing in with Google:", error);
       setLoading(false);
-      throw error;
+      throw error; // Re-throw the error to be caught by the calling component
     }
   };
 
@@ -122,7 +123,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       router.push('/auth/signin');
     } catch (error) {
       // console.error("AuthContext: Error signing out:", error);
-      setLoading(false);
+      setLoading(false); // Ensure loading is set to false in case of sign-out error
     }
   };
 
