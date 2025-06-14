@@ -95,7 +95,7 @@ export default function UpgradePage() {
                     width={600} 
                     height={300} 
                     className="rounded-lg mx-auto shadow-md"
-                    data-ai-hint="financial success graph" 
+                    data-ai-hint="success path" 
                 />
             </div>
           </CardContent>

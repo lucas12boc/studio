@@ -104,7 +104,7 @@ export default function DashboardPage() {
             <CardDescription>Generate your personalized income strategy.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center text-center">
-            <Image src="https://placehold.co/300x200.png" alt="AI Strategy Illustration" width={300} height={200} className="mb-4 rounded-lg" data-ai-hint="ai strategy" />
+            <Image src="https://placehold.co/300x200.png" alt="AI Strategy Illustration" width={300} height={200} className="mb-4 rounded-lg" data-ai-hint="ai insights" />
             <p className="mb-4 text-muted-foreground">
               Let our AI analyze your profile and suggest the best income streams for you.
             </p>

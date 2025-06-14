@@ -44,7 +44,7 @@ export default function LandingPage() {
               width={800} 
               height={400} 
               className="rounded-lg mx-auto shadow-xl"
-              data-ai-hint="financial planning abstract" 
+              data-ai-hint="digital success" 
             />
           </div>
         </section>

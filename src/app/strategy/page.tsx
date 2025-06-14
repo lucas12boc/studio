@@ -1,3 +1,4 @@
+
 "use client";
 
 import { AppLayout } from "@/components/app-layout";
@@ -66,7 +67,7 @@ export default function StrategyPage() {
                             <li>Local opportunities</li>
                             <li>Your risk appetite</li>
                         </ul>
-                        <Image src="https://placehold.co/400x250.png" alt="AI illustration" width={400} height={250} className="rounded-lg mt-4" data-ai-hint="futuristic data" />
+                        <Image src="https://placehold.co/400x250.png" alt="AI illustration" width={400} height={250} className="rounded-lg mt-4" data-ai-hint="data analysis" />
                     </CardContent>
                 </Card>
             )}
