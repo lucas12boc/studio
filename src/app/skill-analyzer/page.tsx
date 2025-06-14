@@ -154,10 +154,13 @@ export default function SkillAnalyzerPage() {
         description: error instanceof Error ? error.message : "Could not analyze the skill. Please try again later.",
         variant: "destructive",
       });
+      setAnalysisResult(null); // Ensure analysisResult is null on error
     } finally {
       setIsLoading(false);
     }
   };
+
+  const displayKey = isLoading ? 'loading' : (analysisResult ? 'results' : 'placeholder');
 
   return (
     <AppLayout title="AI Skill Analyzer">
@@ -213,7 +216,11 @@ export default function SkillAnalyzerPage() {
         </Card>
 
         <div className="md:col-span-2 space-y-6">
-          <SkillAnalysisDisplay isLoading={isLoading} analysisResult={analysisResult} />
+          <SkillAnalysisDisplay 
+            key={displayKey} 
+            isLoading={isLoading} 
+            analysisResult={analysisResult} 
+          />
         </div>
       </div>
     </AppLayout>
