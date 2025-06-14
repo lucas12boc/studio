@@ -1,3 +1,4 @@
+
 "use client";
 
 import type React from "react";
@@ -9,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { PlusCircle, Trash2, CalendarIcon, Edit3, XCircle } from "lucide-react";
+import { PlusCircle, Trash2, CalendarIcon, Edit3, XCircle, ListChecks } from "lucide-react";
 import { format } from "date-fns";
 
 export function TaskManager() {
