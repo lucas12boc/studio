@@ -13,6 +13,7 @@ import {
   Star,
   BrainCircuit,
   Settings,
+  LogOut, // Added LogOut icon
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -25,6 +26,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { useAuth } from "@/contexts/auth-context"; // Import useAuth
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -37,6 +39,12 @@ const navItems = [
 
 export function SidebarNav() {
   const pathname = usePathname();
+  const { user, signOut } = useAuth(); // Get user and signOut function
+
+  const handleSignOut = async () => {
+    await signOut();
+    // Router push is handled within signOut in auth-context
+  };
 
   return (
     <Sidebar>
@@ -93,6 +101,18 @@ export function SidebarNav() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+            {user && ( // Show Sign Out button only if user is logged in
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={handleSignOut}
+                  tooltip="Cerrar Sesión"
+                  className="justify-start text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 dark:text-red-500"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span>Cerrar Sesión</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
           </SidebarMenu>
         </div>
       </SidebarContent>

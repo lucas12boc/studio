@@ -6,8 +6,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase, GraduationCap, Lightbulb, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/contexts/auth-context"; // Import useAuth
+import { useEffect, useState } from "react"; // For handling client-side date
 
 export default function LandingPage() {
+  const { user } = useAuth(); // Get user status
+  const [year, setYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-blue-100">
       <header className="container mx-auto py-6 px-4 md:px-6 flex justify-between items-center">
@@ -16,11 +26,19 @@ export default function LandingPage() {
           <h1 className="text-3xl font-bold font-headline text-primary">ProsperIA</h1>
         </Link>
         <nav className="space-x-4">
-          <Button variant="ghost" asChild>
-            <Link href="/dashboard">Iniciar Sesión</Link>
-          </Button>
+          {user ? (
+            <Button variant="ghost" asChild>
+              <Link href="/dashboard">Ir al Dashboard</Link>
+            </Button>
+          ) : (
+            <Button variant="ghost" asChild>
+              <Link href="/auth/signin">Iniciar Sesión</Link>
+            </Button>
+          )}
           <Button asChild className="bg-accent hover:bg-accent/90 text-accent-foreground">
-            <Link href="/dashboard">Comienza Gratis</Link>
+            <Link href={user ? "/dashboard" : "/auth/signin"}>
+              {user ? "Acceder a la App" : "Comienza Gratis"}
+            </Link>
           </Button>
         </nav>
       </header>
@@ -35,7 +53,7 @@ export default function LandingPage() {
             Genera estrategias de ingresos personalizadas, descubre oportunidades de aprendizaje y encuentra el trabajo de tus sueños. Todo en un solo lugar impulsado por IA.
           </p>
           <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 px-8">
-            <Link href="/dashboard">Explora el Dashboard</Link>
+            <Link href={user ? "/dashboard" : "/auth/signin"}>Explora el Dashboard</Link>
           </Button>
           <div className="mt-12">
             <Image 
@@ -107,7 +125,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="container mx-auto py-8 px-4 md:px-6 text-center text-muted-foreground border-t">
-        <p>&copy; {new Date().getFullYear()} Lucas Leandro Guzmán - ProsperIA. Todos los derechos reservados.</p>
+        <p>&copy; {year} Lucas Leandro Guzmán - ProsperIA. Todos los derechos reservados.</p>
         <div className="mt-2 space-x-4">
             <Link href="mailto:ProsperIApro2025@gmail.com" className="hover:text-primary">Email</Link>
             <Link href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="hover:text-primary">WhatsApp</Link>
