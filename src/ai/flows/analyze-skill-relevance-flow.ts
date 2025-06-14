@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI agent that analyzes the relevance of a specific skill.
@@ -48,12 +49,14 @@ const AnalyzeSkillRelevanceOutputSchema = z.object({
     ),
   suggestedCourses: z
     .array(SuggestedItemSchema)
-    .length(3)
-    .describe('A list of 2-3 suggested course types or topics.'),
+    .min(2)
+    .max(3)
+    .describe('A list of 2 to 3 suggested course types or topics.'),
   suggestedJobRoles: z
     .array(SuggestedItemSchema)
-    .length(3)
-    .describe('A list of 2-3 suggested job roles where this skill is valuable.'),
+    .min(2)
+    .max(3)
+    .describe('A list of 2 to 3 suggested job roles where this skill is valuable.'),
 });
 export type AnalyzeSkillRelevanceOutput = z.infer<
   typeof AnalyzeSkillRelevanceOutputSchema
@@ -81,8 +84,8 @@ const prompt = ai.definePrompt({
   1.  Market Demand: Current market demand for {{{skillName}}}. Categorize as High, Medium, Low, or Emerging, and briefly explain.
   2.  Synergy: {{#if userSkills}}How {{{skillName}}} complements or enhances the user's skills: {{{userSkills}}}.{{else}}General synergies of {{{skillName}}} with common professional skills.{{/if}}
   3.  Income Impact Potential: Qualitatively describe how learning {{{skillName}}} could impact income potential.
-  4.  Suggested Courses: List exactly 3 diverse course types or specific learning topics relevant to {{{skillName}}}. For each, provide a brief reason.
-  5.  Suggested Job Roles: List exactly 3 diverse job roles where {{{skillName}}} is highly valued. For each, provide a brief reason.
+  4.  Suggested Courses: List 2 or 3 diverse course types or specific learning topics relevant to {{{skillName}}}. For each, provide a brief reason.
+  5.  Suggested Job Roles: List 2 or 3 diverse job roles where {{{skillName}}} is highly valued. For each, provide a brief reason.
 
   Ensure the output strictly follows the AnalyzeSkillRelevanceOutputSchema.
   The skillName in the output must be exactly "{{{skillName}}}".
@@ -106,3 +109,4 @@ const analyzeSkillRelevanceFlow = ai.defineFlow(
     return output!;
   }
 );
+

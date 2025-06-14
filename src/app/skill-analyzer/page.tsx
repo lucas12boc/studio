@@ -38,7 +38,7 @@ export default function SkillAnalyzerPage() {
       console.error("Error analyzing skill:", error);
       toast({
         title: "Analysis Failed",
-        description: "Could not analyze the skill. Please try again later.",
+        description: error instanceof Error ? error.message : "Could not analyze the skill. Please try again later.",
         variant: "destructive",
       });
     } finally {
@@ -204,3 +204,4 @@ export default function SkillAnalyzerPage() {
     </AppLayout>
   );
 }
+
