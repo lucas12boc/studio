@@ -101,7 +101,7 @@ export default function SkillAnalyzerPage() {
 
         <div className="md:col-span-2 space-y-6">
           {isLoading && (
-            <Card className="animate-pulse">
+            <Card key="skill-analyzer-loading" className="animate-pulse">
               <CardHeader>
                 <div className="h-7 bg-muted rounded w-3/4"></div>
                 <div className="h-4 bg-muted rounded w-1/2 mt-2"></div>
@@ -119,7 +119,7 @@ export default function SkillAnalyzerPage() {
           )}
 
           {analysisResult && !isLoading && (
-            <Card className="shadow-lg">
+            <Card key="skill-analyzer-results" className="shadow-lg">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline text-2xl">
                   <Sparkles className="h-7 w-7 text-primary" />
@@ -187,7 +187,7 @@ export default function SkillAnalyzerPage() {
           )}
 
           {!analysisResult && !isLoading && (
-            <Card className="border-dashed border-primary/50 bg-primary/5">
+            <Card key="skill-analyzer-placeholder" className="border-dashed border-primary/50 bg-primary/5">
                 <CardContent className="pt-6 text-center">
                     <Lightbulb className="h-12 w-12 text-primary mx-auto mb-4" />
                     <h3 className="text-xl font-semibold mb-2 text-primary">Ready to Dive Deeper?</h3>
