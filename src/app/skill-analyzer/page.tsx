@@ -12,25 +12,12 @@ import { useState, type FormEvent } from "react";
 import { analyzeSkillRelevance, type AnalyzeSkillRelevanceOutput, type AnalyzeSkillRelevanceInput } from "@/ai/flows/analyze-skill-relevance-flow";
 import { Loader2, BrainCircuit, CheckSquare, Briefcase, GraduationCap, TrendingUp, Sparkles, Lightbulb } from "lucide-react";
 
-// Sub-component for displaying analysis content
+// Sub-component for displaying analysis content (results or placeholder)
 function SkillAnalysisDisplay({
-  isLoading,
   analysisResult,
 }: {
-  isLoading: boolean;
   analysisResult: AnalyzeSkillRelevanceOutput | null;
 }) {
-  if (isLoading) {
-    return (
-      <Card key="skill-analyzer-loading-simple">
-        <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
-          <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
-          <p className="text-muted-foreground">Analyzing skill...</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
   if (analysisResult) {
     return (
       <Card key="skill-analyzer-results" className="shadow-lg">
@@ -145,13 +132,11 @@ export default function SkillAnalyzerPage() {
         description: error instanceof Error ? error.message : "Could not analyze the skill. Please try again later.",
         variant: "destructive",
       });
-      setAnalysisResult(null); // Ensure analysisResult is null on error
+      setAnalysisResult(null);
     } finally {
       setIsLoading(false);
     }
   };
-
-  const displayKey = isLoading ? 'loading' : (analysisResult ? 'results' : 'placeholder');
 
   return (
     <AppLayout title="AI Skill Analyzer">
@@ -207,11 +192,19 @@ export default function SkillAnalyzerPage() {
         </Card>
 
         <div className="md:col-span-2 space-y-6">
-          <SkillAnalysisDisplay 
-            key={displayKey} 
-            isLoading={isLoading} 
-            analysisResult={analysisResult} 
-          />
+          {isLoading ? (
+            <Card key="skill-analyzer-loading-direct">
+              <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
+                <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
+                <p className="text-muted-foreground">Analyzing skill...</p>
+              </CardContent>
+            </Card>
+          ) : (
+            <SkillAnalysisDisplay
+              key={analysisResult ? 'results' : 'placeholder'}
+              analysisResult={analysisResult}
+            />
+          )}
         </div>
       </div>
     </AppLayout>
