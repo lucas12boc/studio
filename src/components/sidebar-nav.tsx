@@ -11,7 +11,8 @@ import {
   ListChecks,
   BotMessageSquare,
   Star,
-  BrainCircuit, // Added new icon
+  BrainCircuit,
+  Settings, // Added new icon
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -28,7 +29,7 @@ import {
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/strategy", label: "Strategy AI", icon: BotMessageSquare },
-  { href: "/skill-analyzer", label: "Skill Analyzer", icon: BrainCircuit }, // New item
+  { href: "/skill-analyzer", label: "Skill Analyzer", icon: BrainCircuit },
   { href: "/learning", label: "Learning Hub", icon: GraduationCap },
   { href: "/jobs", label: "Job Board", icon: Briefcase },
   { href: "/tasks", label: "Task Manager", icon: ListChecks },
@@ -66,6 +67,19 @@ export function SidebarNav() {
         
         <div className="p-2 mt-auto">
           <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                isActive={pathname === "/settings"}
+                tooltip="Ajustes"
+                className="justify-start"
+              >
+                <Link href="/settings">
+                  <Settings className="h-5 w-5" />
+                  <span>Ajustes</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
