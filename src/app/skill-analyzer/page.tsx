@@ -25,8 +25,8 @@ export default function SkillAnalyzerPage() {
       toast({ title: "Error", description: "Please enter a skill name to analyze.", variant: "destructive" });
       return;
     }
-    setIsLoading(true);
-    setAnalysisResult(null);
+    setAnalysisResult(null); // Set result to null first
+    setIsLoading(true);      // Then set loading to true
     try {
       const input: AnalyzeSkillRelevanceInput = { skillName: skillName.trim() };
       if (userSkills.trim()) {
@@ -160,7 +160,7 @@ export default function SkillAnalyzerPage() {
                   </h3>
                   <ul className="space-y-3">
                     {analysisResult.suggestedCourses.map((course, index) => (
-                      <li key={index} className="p-3 border rounded-md bg-background/50">
+                      <li key={`course-${index}-${course.name}`} className="p-3 border rounded-md bg-background/50">
                         <p className="font-medium">{course.name}</p>
                         <p className="text-sm text-muted-foreground">{course.reason}</p>
                       </li>
@@ -175,7 +175,7 @@ export default function SkillAnalyzerPage() {
                   </h3>
                   <ul className="space-y-3">
                     {analysisResult.suggestedJobRoles.map((role, index) => (
-                      <li key={index} className="p-3 border rounded-md bg-background/50">
+                      <li key={`role-${index}-${role.name}`} className="p-3 border rounded-md bg-background/50">
                         <p className="font-medium">{role.name}</p>
                         <p className="text-sm text-muted-foreground">{role.reason}</p>
                       </li>
@@ -204,4 +204,3 @@ export default function SkillAnalyzerPage() {
     </AppLayout>
   );
 }
-
