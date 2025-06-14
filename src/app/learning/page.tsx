@@ -1,9 +1,11 @@
+
 "use client";
 
 import { AppLayout } from "@/components/app-layout";
 import { LearningSuggestions } from "@/components/learning-suggestions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Search, Filter } from "lucide-react";
 
 export default function LearningPage() {
@@ -19,9 +21,18 @@ export default function LearningPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input type="search" placeholder="Search courses (e.g., Python, Marketing)..." className="pl-10" />
           </div>
-          <Button variant="outline">
-            <Filter className="mr-2 h-4 w-4" /> Filters
-          </Button>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">
+                <Filter className="mr-2 h-4 w-4" /> Filters
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-4">
+              <p className="text-sm text-muted-foreground">
+                Las opciones de filtro aparecerán aquí en una futura actualización.
+              </p>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
       <LearningSuggestions />
