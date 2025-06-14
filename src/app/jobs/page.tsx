@@ -23,9 +23,15 @@ export default function JobsPage() {
     event.preventDefault();
     // In a real application, you would gather filter values here
     // and perform the search operation.
+    // For demonstration, we'll get form data.
+    const formData = new FormData(event.currentTarget);
+    const keywords = formData.get("keywords") as string;
+    const category = formData.get("category") as string;
+    const location = formData.get("location") as string;
+
     toast({
-      title: "Búsqueda iniciada",
-      description: "Los filtros de búsqueda se aplicarían aquí.",
+      title: "Búsqueda Iniciada",
+      description: `Buscando trabajos con: Palabras clave: ${keywords || 'N/A'}, Categoría: ${category || 'N/A'}, Ubicación: ${location || 'N/A'}.`,
     });
   };
 
@@ -47,7 +53,7 @@ export default function JobsPage() {
               <SelectTrigger className="w-full">
                 <div className="flex items-center gap-2">
                   <Briefcase className="h-4 w-4 text-muted-foreground" />
-                  <SelectValue placeholder="Category" />
+                  <SelectValue placeholder="Categoría" />
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -62,19 +68,22 @@ export default function JobsPage() {
               <SelectTrigger className="w-full">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <SelectValue placeholder="Location" />
+                  <SelectValue placeholder="Ubicación" />
                 </div>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="remote">Remote</SelectItem>
-                <SelectItem value="ny">New York, NY</SelectItem>
-                <SelectItem value="sf">San Francisco, CA</SelectItem>
-                <SelectItem value="austin">Austin, TX</SelectItem>
+                <SelectItem value="ny">New York, NY (USA)</SelectItem>
+                <SelectItem value="sf">San Francisco, CA (USA)</SelectItem>
+                <SelectItem value="austin">Austin, TX (USA)</SelectItem>
                 <SelectItem value="london">London, UK</SelectItem>
+                <SelectItem value="ba">Buenos Aires, AR</SelectItem>
+                <SelectItem value="cdmx">Ciudad de México, MX</SelectItem>
+                <SelectItem value="madrid">Madrid, ES</SelectItem>
               </SelectContent>
             </Select>
             <Button type="submit" className="md:col-span-3 bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Search className="mr-2 h-4 w-4" /> Search Jobs
+              <Search className="mr-2 h-4 w-4" /> Buscar Trabajos
             </Button>
           </div>
         </form>
