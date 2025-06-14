@@ -13,7 +13,7 @@ import {
   signInWithEmailAndPassword,
   type AuthError,
 } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth } from '@/lib/firebase'; // auth can be null if Firebase isn't configured
 import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const isFirebaseConfigured = !!auth;
+  const isFirebaseConfigured = !!auth; // This will be false if auth from firebase.ts is null
 
   useEffect(() => {
     // console.log("AuthContext: isFirebaseConfigured =", isFirebaseConfigured, "Auth instance:", auth);
@@ -40,22 +40,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.warn("AuthContext: Firebase is not configured (auth instance is null). Authentication features will be disabled.");
       setLoading(false);
       setUser(null);
-      return;
+      return; // No need to set up onAuthStateChanged listener
     }
 
+    // Proceed with onAuthStateChanged only if Firebase is configured
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       // console.log("AuthContext: onAuthStateChanged triggered. User:", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
     return () => unsubscribe();
-  }, [isFirebaseConfigured]);
+  }, [isFirebaseConfigured]); // Depend on isFirebaseConfigured
 
   const signInWithGoogle = async () => {
     if (!isFirebaseConfigured || !auth) {
       console.error("AuthContext: signInWithGoogle - Firebase is not configured.");
-      setLoading(false);
-      throw new Error("Firebase no está configurado. Por favor, revisa las variables de entorno.");
+      setLoading(false); // Ensure loading is false
+      throw new Error("Firebase no está configurado. Por favor, revisa las variables de entorno y la configuración del proyecto.");
     }
     const provider = new GoogleAuthProvider();
     try {
@@ -65,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
       console.error("AuthContext: Error signing in with Google:", error);
       setLoading(false);
-      throw error; 
+      throw error;
     }
   };
 
@@ -79,7 +80,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      // onAuthStateChanged will set user. setLoading(false) is handled by onAuthStateChanged.
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error signing up with email and password:", error);
@@ -98,7 +98,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      // onAuthStateChanged will set user. setLoading(false) is handled by onAuthStateChanged.
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error signing in with email and password:", error);
@@ -110,7 +109,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     if (!isFirebaseConfigured || !auth) {
       console.error("AuthContext: signOut - Firebase is not configured.");
-      setLoading(false); // Ensure loading is false if we can't sign out
+      setLoading(false);
+      // setUser(null); // Already handled by onAuthStateChanged or initial state if not configured
+      router.push('/auth/signin'); // Redirect even if not fully configured, as user is effectively signed out
       return;
     }
     try {
@@ -120,7 +121,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       router.push('/auth/signin');
     } catch (error) {
       console.error("AuthContext: Error signing out:", error);
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
