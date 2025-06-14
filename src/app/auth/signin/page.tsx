@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { AuthError } from 'firebase/auth';
-import { Lightbulb, Mail, LogIn, UserPlus, Loader2 } from 'lucide-react';
+import { Lightbulb, Mail, LogIn, UserPlus, Loader2, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -39,11 +39,9 @@ export default function SignInPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [formLoading, setFormLoading] = useState(false); // For email form submission
+  const [formLoading, setFormLoading] = useState(false); 
 
-  // Debug logs
   // console.log("SignInPage Render: isFirebaseConfigured =", isFirebaseConfigured, "authLoading =", authLoading, "formLoading =", formLoading);
-
 
   const currentSchema = isSigningUp ? emailSignUpSchema : emailSignInSchema;
   const form = useForm<EmailSignInFormValues | EmailSignUpFormValues>({
@@ -75,7 +73,7 @@ export default function SignInPage() {
   const handleGoogleSignIn = async () => {
     // console.log("SignInPage: handleGoogleSignIn called. isFirebaseConfigured =", isFirebaseConfigured);
     if (!isFirebaseConfigured) {
-      toast({ title: "Error de Configuración", description: "Firebase no está configurado. Contacta al administrador.", variant: "destructive" });
+      toast({ title: "Error de Configuración", description: "Firebase no está configurado. Revisa tus variables de entorno (.env.local) y reinicia el servidor.", variant: "destructive" });
       return;
     }
     try {
@@ -91,7 +89,7 @@ export default function SignInPage() {
   const handleEmailFormSubmit = async (values: EmailSignInFormValues | EmailSignUpFormValues) => {
     // console.log("SignInPage: handleEmailFormSubmit called. isFirebaseConfigured =", isFirebaseConfigured, "isSigningUp =", isSigningUp);
     if (!isFirebaseConfigured) {
-      toast({ title: "Error de Configuración", description: "Firebase no está configurado.", variant: "destructive" });
+      toast({ title: "Error de Configuración", description: "Firebase no está configurado. Revisa tus variables de entorno (.env.local) y reinicia el servidor.", variant: "destructive" });
       return;
     }
     setFormLoading(true);
@@ -114,7 +112,6 @@ export default function SignInPage() {
         toast({ title: isSigningUp ? "Registro Exitoso" : "Inicio de Sesión Exitoso", description: "Redirigiendo al dashboard..." });
       }
     } catch (error) { 
-      // This catch is a fallback, context should ideally return AuthError objects
       // console.error("SignInPage: Email Sign-In/Up unexpected error caught in component:", error);
       const authError = error as AuthError;
       toast({ title: "Error Inesperado", description: authError.message || "Ocurrió un error inesperado.", variant: "destructive" });
@@ -123,7 +120,6 @@ export default function SignInPage() {
     }
   };
   
-  // Combined loading state for disabling UI elements
   const isLoading = authLoading || formLoading;
 
   if (authLoading && !user && isFirebaseConfigured) { 
@@ -156,6 +152,16 @@ export default function SignInPage() {
           <CardDescription>Accede o crea tu cuenta para continuar</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4 pb-4">
+          {!isFirebaseConfigured && !authLoading && (
+            <div className="p-4 mb-4 text-sm text-destructive-foreground bg-destructive rounded-md flex items-center gap-3">
+              <AlertTriangle className="h-5 w-5" />
+              <div>
+                <p className="font-semibold">Error de Configuración de Firebase</p>
+                <p>La autenticación está deshabilitada. Por favor, verifica tu archivo <code>.env.local</code> y reinicia el servidor de desarrollo.</p>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={form.handleSubmit(handleEmailFormSubmit)} className="space-y-4">
             <div>
               <Label htmlFor="email">Correo Electrónico</Label>
@@ -197,7 +203,7 @@ export default function SignInPage() {
             className="w-full text-md py-6 flex items-center justify-center gap-2"
             disabled={isLoading || !isFirebaseConfigured}
           >
-            {isLoading && !form.formState.isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : ( // Show loader if global auth is loading, not specific to email form
+            {isLoading && !form.formState.isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : ( 
               <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />

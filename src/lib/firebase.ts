@@ -53,7 +53,7 @@ if (typeof window !== 'undefined') {
       }
     } else {
       console.error("Firebase App was not initialized (likely due to missing API key or other config issue), so Firebase Auth cannot be initialized.");
-      authInstance = null; // Ensure authInstance is null if app is not initialized
+      // authInstance remains null
     }
   }
 }
