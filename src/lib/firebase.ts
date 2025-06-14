@@ -3,7 +3,7 @@ import { initializeApp, getApps, getApp, type FirebaseOptions } from 'firebase/a
 import { getAuth } from 'firebase/auth';
 
 // IMPORTANT: Replace with your actual Firebase project configuration
-// These should be stored in your .env file (e.g., .env.local)
+// These should be stored in your .env.local file (e.g., .env.local)
 // Example .env.local content:
 // NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSy..."
 // NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project-id.firebaseapp.com"
@@ -21,14 +21,40 @@ const firebaseConfig: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+// Log the config to help debug.
+// Make sure to check your browser console after restarting the dev server.
+if (typeof window !== 'undefined') { // Log only on the client-side
+    console.log("Firebase Config Being Used:", firebaseConfig);
+
+    if (!firebaseConfig.apiKey) {
+        console.error("Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Please check your .env.local file and restart the development server.");
+    }
+}
+
+
 // Initialize Firebase
 let app;
 if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
+  try {
+    app = initializeApp(firebaseConfig);
+  } catch (e) {
+    console.error("Error initializing Firebase App. Check your firebaseConfig object and .env.local variables.", e);
+    // You might want to throw the error or handle it in a way that your app can gracefully degrade
+    throw e;
+  }
 } else {
   app = getApp();
 }
 
-const auth = getAuth(app);
+let authInstance = null;
+try {
+  authInstance = getAuth(app);
+} catch (e) {
+    console.error("Error getting Firebase Auth instance. This usually follows an app initialization error or if Firebase app is not correctly initialized.", e);
+    // Depending on your app's needs, you might set authInstance to a specific error state
+    // or allow it to be null and handle that in your AuthContext.
+}
+
+const auth = authInstance;
 
 export { app, auth };
