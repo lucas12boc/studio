@@ -61,4 +61,3 @@ if (typeof window !== 'undefined') {
 const auth = authInstance;
 
 export { app, auth };
-

@@ -61,6 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       await signInWithPopup(auth, provider);
+      // Successful sign-in will trigger onAuthStateChanged, which updates user and loading state
     } catch (error) {
       // console.error("AuthContext: Error signing in with Google:", error);
       setLoading(false);
@@ -78,6 +79,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+      // Successful sign-up will trigger onAuthStateChanged
       return userCredential.user;
     } catch (error) {
       // console.error("AuthContext: Error signing up with email and password:", error);
@@ -96,6 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+      // Successful sign-in will trigger onAuthStateChanged
       return userCredential.user;
     } catch (error) {
       // console.error("AuthContext: Error signing in with email and password:", error);
@@ -115,6 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       await firebaseSignOut(auth);
+      // onAuthStateChanged will set user to null
       router.push('/auth/signin');
     } catch (error) {
       // console.error("AuthContext: Error signing out:", error);
