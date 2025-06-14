@@ -12,8 +12,8 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-blue-100">
       <header className="container mx-auto py-6 px-4 md:px-6 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
-          <Lightbulb className="h-8 w-8 text-primary" />
-          <h1 className="text-2xl font-bold font-headline text-primary">ProsperIA</h1>
+          <Lightbulb className="h-10 w-10 text-primary" />
+          <h1 className="text-3xl font-bold font-headline text-primary">ProsperIA</h1>
         </Link>
         <nav className="space-x-4">
           <Button variant="ghost" asChild>

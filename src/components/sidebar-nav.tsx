@@ -12,7 +12,7 @@ import {
   BotMessageSquare,
   Star,
   BrainCircuit,
-  Settings, // Added new icon
+  Settings,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -42,8 +42,8 @@ export function SidebarNav() {
     <Sidebar>
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2">
-          <Lightbulb className="h-8 w-8 text-primary" />
-          <h1 className="text-xl font-semibold font-headline">ProsperIA</h1>
+          <Lightbulb className="h-9 w-9 text-primary" />
+          <h1 className="text-xl font-bold font-headline text-primary">ProsperIA</h1>
         </Link>
       </SidebarHeader>
       <SidebarContent>
