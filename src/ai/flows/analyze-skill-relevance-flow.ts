@@ -89,7 +89,7 @@ const prompt = ai.definePrompt({
   5.  Suggested Job Roles: (A list of 2 to 3 diverse job roles where {{{skillName}}} is highly valued. Each item in this list MUST be an object with a 'name' field and a 'reason' field.)
 
   The 'skillName' in the output JSON must be exactly "{{{skillName}}}".
-  The 'suggestedCourses' and 'suggestedJobRoles' fields must be arrays of objects, where each object contains 'name' and 'reason' string properties.
+  The 'suggestedCourses' and 'suggestedJobRoles' fields must be arrays of objects, where each object contains 'name' and 'reason' string properties. Ensure there are between 2 and 3 items in each of these arrays.
   `,
 });
 
@@ -100,14 +100,22 @@ const analyzeSkillRelevanceFlow = ai.defineFlow(
     outputSchema: AnalyzeSkillRelevanceOutputSchema,
   },
   async (input: AnalyzeSkillRelevanceInput) => {
-    const {output} = await prompt(input);
+    const {output: rawOutput} = await prompt(input);
+
+    if (!rawOutput) {
+      console.error("AI prompt did not return a valid output object for analyzeSkillRelevanceFlow.");
+      throw new Error("AI failed to generate a valid analysis. The output was empty.");
+    }
+    
+    // Create a shallow copy to avoid mutating the direct output from the prompt if needed.
+    let finalOutput = { ...rawOutput };
+
     // Ensure the output skillName matches the input, as per instructions.
     // This is a failsafe in case the LLM deviates.
-    if (output && output.skillName !== input.skillName) {
-        console.warn(`LLM modified skillName. Correcting from "${output.skillName}" to "${input.skillName}".`);
-        output.skillName = input.skillName;
+    if (finalOutput.skillName !== input.skillName) {
+        console.warn(`LLM modified skillName. Correcting from "${finalOutput.skillName}" to "${input.skillName}".`);
+        finalOutput.skillName = input.skillName; // Mutate the copy
     }
-    return output!;
+    return finalOutput;
   }
 );
-
