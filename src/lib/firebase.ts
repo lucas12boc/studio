@@ -1,16 +1,6 @@
 
 import { initializeApp, getApps, getApp, type FirebaseOptions } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-
-// IMPORTANT: Replace with your actual Firebase project configuration
-// These should be stored in your .env.local file (e.g., .env.local)
-// Example .env.local content:
-// NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSy..."
-// NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project-id.firebaseapp.com"
-// NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project-id"
-// NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project-id.appspot.com"
-// NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="1234567890"
-// NEXT_PUBLIC_FIREBASE_APP_ID="1:1234567890:web:abc123def456"
+import { getAuth, type Auth } from 'firebase/auth'; // Explicitly import Auth type
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,40 +11,50 @@ const firebaseConfig: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Log the config to help debug.
-// Make sure to check your browser console after restarting the dev server.
-if (typeof window !== 'undefined') { // Log only on the client-side
-    console.log("Firebase Config Being Used:", firebaseConfig);
+let app: ReturnType<typeof initializeApp> | undefined = undefined;
+let authInstance: Auth | null = null; // Use Auth type from firebase/auth
 
-    if (!firebaseConfig.apiKey) {
-        console.error("Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Please check your .env.local file and restart the development server.");
+if (typeof window !== 'undefined') {
+  // This block runs only on the client-side
+  console.log("Firebase Config Being Used (client-side):", {
+    apiKey: firebaseConfig.apiKey ? '********' : undefined, // Don't log actual key
+    authDomain: firebaseConfig.authDomain,
+    projectId: firebaseConfig.projectId,
+    // It's good practice to not log storageBucket, messagingSenderId, or appId unless strictly necessary for debugging
+  });
+
+  if (!firebaseConfig.apiKey) {
+    console.error("CRITICAL Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Firebase will not be initialized. Please check your .env.local file and restart the development server.");
+  } else {
+    // Proceed with initialization only if API key is present
+    if (!getApps().length) {
+      try {
+        app = initializeApp(firebaseConfig);
+      } catch (e) {
+        console.error("Error initializing Firebase App:", e);
+        // app will remain undefined
+      }
+    } else {
+      app = getApp();
     }
-}
 
-
-// Initialize Firebase
-let app;
-if (!getApps().length) {
-  try {
-    app = initializeApp(firebaseConfig);
-  } catch (e) {
-    console.error("Error initializing Firebase App. Check your firebaseConfig object and .env.local variables.", e);
-    // You might want to throw the error or handle it in a way that your app can gracefully degrade
-    throw e;
+    if (app) {
+      try {
+        authInstance = getAuth(app);
+      } catch (e) {
+        console.error("Error getting Firebase Auth instance:", e);
+        // authInstance will remain null
+      }
+    } else {
+      console.error("Firebase App was not initialized (likely due to missing API key or other config issue), so Firebase Auth cannot be initialized.");
+    }
   }
-} else {
-  app = getApp();
 }
+// Note: For Server Components or server-side logic that might import this file,
+// Firebase initialization might behave differently or needs a separate handling
+// if these variables are also used server-side directly.
+// The current error logs indicate the issue is during client-side execution.
 
-let authInstance = null;
-try {
-  authInstance = getAuth(app);
-} catch (e) {
-    console.error("Error getting Firebase Auth instance. This usually follows an app initialization error or if Firebase app is not correctly initialized.", e);
-    // Depending on your app's needs, you might set authInstance to a specific error state
-    // or allow it to be null and handle that in your AuthContext.
-}
-
-const auth = authInstance;
+const auth = authInstance; // Assign to the exported variable
 
 export { app, auth };
