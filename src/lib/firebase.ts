@@ -20,27 +20,32 @@ if (typeof window !== 'undefined') {
     apiKey: firebaseConfig.apiKey ? '********' : undefined, // Don't log actual key
     authDomain: firebaseConfig.authDomain,
     projectId: firebaseConfig.projectId,
-    // It's good practice to not log storageBucket, messagingSenderId, or appId unless strictly necessary for debugging
+    storageBucket: firebaseConfig.storageBucket,
+    messagingSenderId: firebaseConfig.messagingSenderId,
+    appId: firebaseConfig.appId,
   });
 
   if (!firebaseConfig.apiKey) {
-    console.error("CRITICAL Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Firebase will not be initialized. Please check your .env.local file and restart the development server.");
+    console.error("CRITICAL Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Firebase will not be initialized. Please check your .env.local file in the project root and ensure it's correctly formatted and that you've restarted the development server.");
   } else {
     // Proceed with initialization only if API key is present
     if (!getApps().length) {
       try {
         app = initializeApp(firebaseConfig);
+        console.log("Firebase App initialized successfully.");
       } catch (e) {
         console.error("Error initializing Firebase App:", e);
         // app will remain undefined
       }
     } else {
       app = getApp();
+      console.log("Firebase App instance retrieved.");
     }
 
     if (app) {
       try {
         authInstance = getAuth(app);
+        console.log("Firebase Auth instance retrieved successfully.");
       } catch (e) {
         console.error("Error getting Firebase Auth instance:", e);
         // authInstance will remain null
@@ -50,11 +55,7 @@ if (typeof window !== 'undefined') {
     }
   }
 }
-// Note: For Server Components or server-side logic that might import this file,
-// Firebase initialization might behave differently or needs a separate handling
-// if these variables are also used server-side directly.
-// The current error logs indicate the issue is during client-side execution.
 
-const auth = authInstance; // Assign to the exported variable
+const auth = authInstance; 
 
 export { app, auth };
