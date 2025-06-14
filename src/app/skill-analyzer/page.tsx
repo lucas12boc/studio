@@ -20,7 +20,7 @@ function SkillAnalysisDisplay({
 }) {
   if (analysisResult) {
     return (
-      <Card key="skill-analyzer-results" className="shadow-lg">
+      <Card key="skill-analyzer-results-content" className="shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 font-headline text-2xl">
             <Sparkles className="h-7 w-7 text-primary" />
@@ -89,7 +89,7 @@ function SkillAnalysisDisplay({
   }
 
   return (
-    <Card key="skill-analyzer-placeholder" className="border-dashed border-primary/50 bg-primary/5">
+    <Card key="skill-analyzer-placeholder-content" className="border-dashed border-primary/50 bg-primary/5">
       <CardContent className="pt-6 text-center min-h-[200px] flex flex-col items-center justify-center">
         <Lightbulb className="h-12 w-12 text-primary mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2 text-primary">Ready to Dive Deeper?</h3>
@@ -136,6 +136,12 @@ export default function SkillAnalyzerPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getDisplaySectionKey = () => {
+    if (isLoading) return 'loading-section';
+    if (analysisResult) return 'results-section';
+    return 'placeholder-section';
   };
 
   return (
@@ -192,19 +198,20 @@ export default function SkillAnalyzerPage() {
         </Card>
 
         <div className="md:col-span-2 space-y-6">
-          {isLoading ? (
-            <Card key="skill-analyzer-loading-direct">
-              <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
-                <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
-                <p className="text-muted-foreground">Analyzing skill...</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <SkillAnalysisDisplay
-              key={analysisResult ? 'results' : 'placeholder'}
-              analysisResult={analysisResult}
-            />
-          )}
+          <div key={getDisplaySectionKey()}>
+            {isLoading ? (
+              <Card>
+                <CardContent className="pt-6 text-center flex flex-col items-center justify-center min-h-[200px]">
+                  <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
+                  <p className="text-muted-foreground">Analizando habilidad...</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <SkillAnalysisDisplay
+                analysisResult={analysisResult}
+              />
+            )}
+          </div>
         </div>
       </div>
     </AppLayout>
