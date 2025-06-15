@@ -16,11 +16,21 @@ let authInstance: Auth | null = null;
 
 if (typeof window !== 'undefined') {
   // This block runs only on the client-side
-  if (!firebaseConfig.apiKey) {
-    console.error("CRITICAL Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or undefined. Firebase will not be initialized. Please check your .env.local file in the project root and ensure it's correctly formatted and that you've restarted the development server.");
-  } else if (!firebaseConfig.authDomain || !firebaseConfig.projectId || !firebaseConfig.appId) {
-    // Check for other essential Firebase config values
-    console.error("CRITICAL Firebase Error: One or more essential Firebase config values (authDomain, projectId, appId) are missing or undefined. Firebase will not be initialized correctly. Please check your .env.local file and ensure all NEXT_PUBLIC_FIREBASE_... variables are correctly set.");
+  const essentialConfigsPresent = 
+    firebaseConfig.apiKey &&
+    firebaseConfig.authDomain &&
+    firebaseConfig.projectId &&
+    firebaseConfig.appId;
+
+  if (!essentialConfigsPresent) {
+    let missingVars = [];
+    if (!firebaseConfig.apiKey) missingVars.push("NEXT_PUBLIC_FIREBASE_API_KEY");
+    if (!firebaseConfig.authDomain) missingVars.push("NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN");
+    if (!firebaseConfig.projectId) missingVars.push("NEXT_PUBLIC_FIREBASE_PROJECT_ID");
+    if (!firebaseConfig.appId) missingVars.push("NEXT_PUBLIC_FIREBASE_APP_ID");
+    
+    console.error(`CRITICAL Firebase Error: One or more essential Firebase config values are missing or undefined (${missingVars.join(', ')}). Firebase will not be initialized. Please check your .env.local file in the project root and ensure it's correctly formatted and that you've restarted the development server.`);
+    // app remains undefined, authInstance remains null
   } else {
     // Proceed with initialization only if essential keys are present
     if (!getApps().length) {
