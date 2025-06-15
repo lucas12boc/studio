@@ -38,22 +38,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!isFirebaseConfigured || !auth) {
       setLoading(false);
       setUser(null);
-      // console.log("AuthProvider: Firebase not configured on mount, auth disabled.");
       return () => {};
     }
 
-    // console.log("AuthProvider: Setting up onAuthStateChanged listener.");
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("AuthProvider: onAuthStateChanged triggered. New user:", currentUser ? currentUser.uid : null);
       setUser(currentUser);
       setLoading(false);
     }, (error) => {
-      // console.error("AuthProvider: Error in onAuthStateChanged listener:", error);
+      console.error("AuthProvider: Error in onAuthStateChanged listener:", error);
       setUser(null);
       setLoading(false);
     });
     return () => {
-      // console.log("AuthProvider: Cleaning up onAuthStateChanged listener.");
       unsubscribe();
     }
   }, [isFirebaseConfigured]);
@@ -64,19 +60,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     if (!isFirebaseConfigured || !auth) {
       console.error("AuthContext: signInWithGoogle - Firebase is not configured.");
-      setLoading(false); // Ensure loading is false if we bail early
+      setLoading(false);
       throw new Error("Firebase no está configurado. Revisa tus variables de entorno y la configuración del proyecto.");
     }
     const provider = new GoogleAuthProvider();
     try {
       setLoading(true);
       await signInWithPopup(auth, provider);
-      // Successful sign-in will trigger onAuthStateChanged
-      // setLoading(false); // onAuthStateChanged will handle this
     } catch (error) {
-      console.error("AuthContext: Full error during signInWithPopup:", error); // Log the full error object
+      console.error("AuthContext: Full error during signInWithPopup:", error); 
       setLoading(false);
-      throw error; // Rethrow the error so the component can catch it
+      throw error; 
     }
   };
 
@@ -90,7 +84,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      // setLoading(false); // onAuthStateChanged will handle this
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error during signUpWithEmailPassword:", error);
@@ -109,7 +102,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      // setLoading(false); // onAuthStateChanged will handle this
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error during signInWithEmailPassword:", error);
@@ -120,23 +112,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     if (!isFirebaseConfigured || !auth) {
-      // console.log("AuthContext: signOut - Firebase not configured. Clearing user locally.");
       setUser(null);
-      setLoading(false); // Ensure loading state is updated
-      router.push('/auth/signin'); // Redirect to sign-in
+      setLoading(false); 
+      router.push('/auth/signin'); 
       return;
     }
     try {
       setLoading(true);
-      // console.log("AuthContext: Signing out from Firebase...");
       await firebaseSignOut(auth);
-      // setUser(null); // onAuthStateChanged will handle this
-      // setLoading(false); // onAuthStateChanged will handle this
-      router.push('/auth/signin'); // Redirect after successful Firebase sign-out
+      router.push('/auth/signin'); 
     } catch (error) {
       console.error("AuthContext: Error during signOut:", error);
-      setLoading(false); // Ensure loading state is updated on error
-      // Optionally, still try to clear local user state and redirect
+      setLoading(false); 
       setUser(null);
       router.push('/auth/signin');
     }
