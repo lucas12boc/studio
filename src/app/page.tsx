@@ -19,7 +19,7 @@ export default function LandingPage() {
 
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-blue-100">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-sky-100 dark:to-sky-900/30">
       <header className="container mx-auto py-6 px-4 md:px-6 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
           <Lightbulb className="h-10 w-10 text-primary" />
@@ -27,11 +27,11 @@ export default function LandingPage() {
         </Link>
         <nav className="space-x-4">
           {user ? (
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild>
               <Link href="/dashboard">Ir al Dashboard</Link>
             </Button>
           ) : (
-            <Button variant="ghost" asChild>
+            <Button variant="outline" asChild>
               <Link href="/auth/signin">Iniciar Sesión</Link>
             </Button>
           )}
