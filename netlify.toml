@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Netlify's Next.js Runtime (often enabled by default for Next.js projects)
+# will handle server-side rendering, API routes, and other Next.js specific features.
+# If you encounter issues, you might explicitly need to ensure the Next.js Runtime
+# is enabled in your Netlify site settings or add the @netlify/plugin-nextjs,
+# but usually, autodetection works well for projects created recently.
+
+# Example for specifying Node.js version if needed:
+# [build.environment]
+#   NODE_VERSION = "18" # Or your preferred LTS version
+
+# Example for redirects or rewrites if needed later:
+# [[redirects]]
+#   from = "/old-path"
+#   to = "/new-path"
+#   status = 301
