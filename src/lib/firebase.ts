@@ -20,13 +20,17 @@ if (typeof window !== 'undefined') {
     firebaseConfig.apiKey &&
     firebaseConfig.authDomain &&
     firebaseConfig.projectId &&
-    firebaseConfig.appId;
+    firebaseConfig.appId &&
+    firebaseConfig.messagingSenderId && // Added check for messagingSenderId
+    firebaseConfig.storageBucket; // Added check for storageBucket
 
   if (!essentialConfigsPresent) {
     let missingVars = [];
     if (!firebaseConfig.apiKey) missingVars.push("NEXT_PUBLIC_FIREBASE_API_KEY");
     if (!firebaseConfig.authDomain) missingVars.push("NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN");
     if (!firebaseConfig.projectId) missingVars.push("NEXT_PUBLIC_FIREBASE_PROJECT_ID");
+    if (!firebaseConfig.storageBucket) missingVars.push("NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET");
+    if (!firebaseConfig.messagingSenderId) missingVars.push("NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID");
     if (!firebaseConfig.appId) missingVars.push("NEXT_PUBLIC_FIREBASE_APP_ID");
     
     console.error(`CRITICAL Firebase Error: One or more essential Firebase config values are missing or undefined (${missingVars.join(', ')}). Firebase will not be initialized. Please check your .env.local file in the project root and ensure it's correctly formatted and that you've restarted the development server.`);

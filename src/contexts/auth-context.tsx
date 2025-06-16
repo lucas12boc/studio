@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     if (!isFirebaseConfigured || !auth) {
       console.error("AuthContext: signInWithGoogle - Firebase is not configured.");
-      setLoading(false); // Ensure loading is false if we can't proceed
+      setLoading(false); 
       throw new Error("Firebase no está configurado. Revisa tus variables de entorno y la configuración del proyecto.");
     }
     const provider = new GoogleAuthProvider();
@@ -72,9 +72,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await signInWithPopup(auth, provider);
       // onAuthStateChanged will handle setting the user and redirecting
     } catch (error) {
-      console.error("AuthContext: Full error during signInWithPopup:", error); 
-      setLoading(false); // Ensure loading is false on error
-      throw error; // Re-throw the error so the calling component can handle it (e.g., show a toast)
+      const authError = error as AuthError;
+      console.error("AuthContext: Full error during signInWithPopup:", authError);
+      console.error("AuthContext: Google Sign-In Error Code:", authError.code);
+      console.error("AuthContext: Google Sign-In Error Message:", authError.message);
+      setLoading(false); 
+      throw error; 
     }
   };
 
@@ -88,7 +91,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-      // onAuthStateChanged will handle setting the user
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error during signUpWithEmailPassword:", error);
@@ -107,7 +109,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setLoading(true);
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-      // onAuthStateChanged will handle setting the user
       return userCredential.user;
     } catch (error) {
       console.error("AuthContext: Error during signInWithEmailPassword:", error);
@@ -118,22 +119,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     if (!isFirebaseConfigured || !auth) {
-      // console.log("AuthContext signOut: Firebase not configured, redirecting to signin.");
-      setUser(null); // Clear user state
-      setLoading(false); // Ensure loading is false
-      router.push('/auth/signin'); // Redirect to sign-in page
+      setUser(null); 
+      setLoading(false); 
+      router.push('/auth/signin'); 
       return;
     }
     try {
-      // console.log("AuthContext signOut: Attempting Firebase sign out.");
       setLoading(true);
       await firebaseSignOut(auth);
-      // onAuthStateChanged will set user to null and loading to false.
-      // Router push is handled by useEffect in pages or here explicitly if needed.
       router.push('/auth/signin'); 
     } catch (error) {
       console.error("AuthContext: Error during signOut:", error);
-      // Even on error, try to clear user and redirect
       setUser(null);
       setLoading(false); 
       router.push('/auth/signin');
