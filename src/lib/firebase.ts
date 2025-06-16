@@ -21,8 +21,8 @@ if (typeof window !== 'undefined') {
     firebaseConfig.authDomain &&
     firebaseConfig.projectId &&
     firebaseConfig.appId &&
-    firebaseConfig.messagingSenderId && // Added check for messagingSenderId
-    firebaseConfig.storageBucket; // Added check for storageBucket
+    firebaseConfig.messagingSenderId && 
+    firebaseConfig.storageBucket; 
 
   if (!essentialConfigsPresent) {
     let missingVars = [];
