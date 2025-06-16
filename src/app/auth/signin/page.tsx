@@ -44,6 +44,9 @@ export default function SignInPage() {
   // useEffect(() => {
   //   // Descomenta estas líneas en tu entorno local para depurar
   //   // console.log("SignInPage Render: isFirebaseConfigured =", isFirebaseConfigured, "authLoading =", authLoading, "formLoading =", formLoading);
+  //   if (typeof window !== 'undefined') {
+  //     console.log("AuthContext: Attempting Google Sign-In from hostname:", window.location.hostname);
+  //   }
   // },[isFirebaseConfigured, authLoading, formLoading]);
 
 
@@ -128,7 +131,7 @@ export default function SignInPage() {
 
   if (authLoading && !user && isFirebaseConfigured) { 
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-background to-blue-100 p-4">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary/20 via-primary/5 to-background p-4">
         <Lightbulb className="h-16 w-16 text-primary animate-pulse mx-auto mb-4" />
         <p className="text-xl text-primary">Cargando ProsperIA...</p>
       </div>
@@ -137,7 +140,7 @@ export default function SignInPage() {
   
   if (user && !authLoading) { 
       return (
-         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-background to-blue-100 p-4">
+         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary/20 via-primary/5 to-background p-4">
             <Lightbulb className="h-16 w-16 text-primary animate-pulse mx-auto mb-4" />
             <p className="text-xl text-primary">Redirigiendo...</p>
         </div>
@@ -145,12 +148,12 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-background to-blue-100 p-4">
-      <Card className="w-full max-w-md shadow-xl rounded-lg">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary/20 via-primary/5 to-background p-4">
+      <Card className="w-full max-w-md shadow-2xl rounded-lg border border-primary/30">
         <CardHeader className="text-center pt-8">
-          <Link href="/" className="flex items-center gap-2 justify-center mb-6">
-            <Lightbulb className="h-12 w-12 text-primary" />
-            <h1 className="text-4xl font-bold font-headline text-primary">ProsperIA</h1>
+          <Link href="/" className="flex items-center gap-2 justify-center mb-8">
+            <Lightbulb className="h-16 w-16 text-primary" />
+            <h1 className="text-5xl font-bold font-headline text-primary">ProsperIA</h1>
           </Link>
           <CardTitle className="text-2xl font-headline">{isSigningUp ? 'Crear Cuenta' : 'Iniciar Sesión'}</CardTitle>
           <CardDescription>Accede o crea tu cuenta para continuar</CardDescription>
@@ -196,7 +199,7 @@ export default function SignInPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-card px-2 text-muted-foreground">
                 O continúa con
               </span>
             </div>
