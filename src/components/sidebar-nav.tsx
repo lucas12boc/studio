@@ -13,7 +13,8 @@ import {
   Star,
   BrainCircuit,
   Settings,
-  LogOut, // Added LogOut icon
+  LogOut, 
+  MessageSquareText, // Added Feedback icon
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -26,7 +27,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { useAuth } from "@/contexts/auth-context"; // Import useAuth
+import { useAuth } from "@/contexts/auth-context"; 
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -39,11 +40,10 @@ const navItems = [
 
 export function SidebarNav() {
   const pathname = usePathname();
-  const { user, signOut } = useAuth(); // Get user and signOut function
+  const { user, signOut } = useAuth(); 
 
   const handleSignOut = async () => {
     await signOut();
-    // Router push is handled within signOut in auth-context
   };
 
   return (
@@ -101,7 +101,7 @@ export function SidebarNav() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {user && ( // Show Sign Out button only if user is logged in
+            {user && ( 
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={handleSignOut}
@@ -122,6 +122,15 @@ export function SidebarNav() {
         </p>
         <p className="text-xs text-muted-foreground">
           WhatsApp: <a href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">+54 2257405607</a>
+        </p>
+        <p className="text-xs text-muted-foreground">
+          <a 
+            href="mailto:ProsperIApro2025@gmail.com?subject=Feedback%20sobre%20ProsperIA&body=Hola%20equipo%20de%20ProsperIA,%0D%0A%0D%0ATengo%20el%20siguiente%20feedback/sugerencia:%0D%0A%0D%0A" 
+            className="flex items-center underline hover:text-primary"
+          >
+            <MessageSquareText className="mr-1 h-3 w-3" />
+            Enviar Feedback
+          </a>
         </p>
         <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Lucas Leandro Guzmán - ProsperIA</p>
       </SidebarFooter>

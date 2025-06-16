@@ -3,14 +3,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Briefcase, GraduationCap, Lightbulb, TrendingUp } from "lucide-react";
+import { Briefcase, GraduationCap, Lightbulb, TrendingUp, MessageSquareText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/contexts/auth-context"; // Import useAuth
-import { useEffect, useState } from "react"; // For handling client-side date
+import { useAuth } from "@/contexts/auth-context"; 
+import { useEffect, useState } from "react"; 
 
 export default function LandingPage() {
-  const { user } = useAuth(); // Get user status
+  const { user } = useAuth(); 
   const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function LandingPage() {
             ProsperIA: Tu Inteligencia Artificial para el Éxito Financiero
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Genera estrategias de ingresos personalizadas, descubre oportunidades de aprendizaje y encuentra el trabajo de tus sueños. Todo en un solo lugar impulsado por IA.
+            Genera estrategias de ingresos personalizadas con IA, analiza la relevancia de tus habilidades y planifica tu crecimiento. ¡Todo en un solo lugar!
           </p>
           <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg py-6 px-8">
             <Link href={user ? "/dashboard" : "/auth/signin"}>Explora el Dashboard</Link>
@@ -88,10 +88,10 @@ export default function LandingPage() {
                   <div className="flex justify-center mb-4">
                     <GraduationCap className="h-12 w-12 text-accent" />
                   </div>
-                  <CardTitle className="text-xl font-semibold text-center">Aprendizaje Continuo</CardTitle>
+                  <CardTitle className="text-xl font-semibold text-center">Aprendizaje y Desarrollo</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center text-muted-foreground">
-                  Accede a recursos y cursos curados para desarrollar las habilidades más demandadas en el mercado actual.
+                  Explora recursos para potenciar tus habilidades. Próximamente, recibirás sugerencias de aprendizaje personalizadas por nuestra IA.
                 </CardContent>
               </Card>
               <Card className="shadow-lg hover:shadow-xl transition-shadow">
@@ -99,10 +99,10 @@ export default function LandingPage() {
                   <div className="flex justify-center mb-4">
                     <Briefcase className="h-12 w-12 text-accent" />
                   </div>
-                  <CardTitle className="text-xl font-semibold text-center">Oportunidades Reales</CardTitle>
+                  <CardTitle className="text-xl font-semibold text-center">Explora Oportunidades</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center text-muted-foreground">
-                  Conéctate con ofertas de empleo relevantes y da el siguiente paso en tu carrera profesional.
+                  Descubre ejemplos de oportunidades laborales. Estamos trabajando para conectarte con ofertas relevantes y personalizadas por IA.
                 </CardContent>
               </Card>
             </div>
@@ -126,9 +126,15 @@ export default function LandingPage() {
 
       <footer className="container mx-auto py-8 px-4 md:px-6 text-center text-muted-foreground border-t">
         <p>&copy; {year} Lucas Leandro Guzmán - ProsperIA. Todos los derechos reservados.</p>
-        <div className="mt-2 space-x-4">
-            <Link href="mailto:ProsperIApro2025@gmail.com" className="hover:text-primary">Email</Link>
-            <Link href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="hover:text-primary">WhatsApp</Link>
+        <div className="mt-4 flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <a href="mailto:ProsperIApro2025@gmail.com" className="hover:text-primary text-sm">Email de Contacto</a>
+            <a href="https://wa.me/542257405607" target="_blank" rel="noopener noreferrer" className="hover:text-primary text-sm">WhatsApp</a>
+            <Button variant="link" asChild className="text-sm">
+              <a href="mailto:ProsperIApro2025@gmail.com?subject=Feedback%20sobre%20ProsperIA&body=Hola%20equipo%20de%20ProsperIA,%0D%0A%0D%0ATengo%20el%20siguiente%20feedback/sugerencia:%0D%0A%0D%0A">
+                <MessageSquareText className="mr-2 h-4 w-4" />
+                Enviar Feedback
+              </a>
+            </Button>
         </div>
       </footer>
     </div>
