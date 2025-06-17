@@ -36,3 +36,4 @@ Las variables de entorno necesarias (principalmente las claves de API de Firebas
 ## Contribuciones y Feedback
 
 ¡El feedback es bienvenido! Si tienes sugerencias o encuentras algún problema, por favor contacta a través de [ProsperIApro2025@gmail.com](mailto:ProsperIApro2025@gmail.com).
+
