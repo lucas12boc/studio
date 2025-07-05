@@ -11,7 +11,7 @@ ProsperIA es una aplicación web construida con Next.js y Firebase, diseñada pa
 *   **Hub de Aprendizaje (MVP):** Sección con ejemplos de cursos para mejorar habilidades (con planes de personalización por IA).
 *   **Bolsa de Trabajo (MVP):** Sección con ejemplos de ofertas laborales (con planes de personalización por IA).
 *   **Gestor de Tareas:** Herramienta para que los usuarios organicen sus pasos para alcanzar sus metas financieras.
-*   **Interfaz Moderna y Adaptable:** Diseño limpio y responsivo utilizando ShadCN UI y Tailwind CSS.
+*   **Interfaz Moderna y Adaptable:** Diseño limpio y responsivo utilizando ShadCN UI y Tailwind CSS. actualización
 
 ## Tecnologías Utilizadas
 
