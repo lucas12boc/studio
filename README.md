@@ -16,7 +16,7 @@ ProsperIA es una aplicación web construida con Next.js y Firebase, diseñada pa
 ## Tecnologías Utilizadas
 
 *   **Frontend:** Next.js (App Router), React, TypeScript
-*   **Estilos:** Tailwind CSS, ShadCN UI
+*   **Estilos:** Tailwind CSS, ShadCN UI, actualiza todo
 *   **Inteligencia Artificial:** Genkit (con modelos de Google AI)
 *   **Backend y Autenticación:** Firebase (Authentication)
 *   **Hosting (Frontend):** Preparado para Netlify / Vercel / Firebase Hosting
