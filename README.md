@@ -6,7 +6,7 @@ ProsperIA es una aplicación web construida con Next.js y Firebase, diseñada pa
 
 *   **Generador de Estrategias de Ingresos (IA):** Basado en las habilidades, experiencia, ubicación y tolerancia al riesgo del usuario, la IA sugiere caminos personalizados para aumentar los ingresos.
 *   **Analizador de Relevancia de Habilidades (IA):** Permite a los usuarios ingresar una habilidad y recibir un análisis sobre su demanda en el mercado, sinergia con otras habilidades, potencial de impacto en los ingresos y sugerencias de cursos y roles laborales. 
-*   **Autenticación de Usuarios:** Sistema seguro de registro e inicio de sesión con Firebase Authentication (Email/Contraseña y Google).
+*   **Autenticación de Usuarios:** Sistema seguro de registro e inicio de sesión con Firebase Authentication (Email/Contraseña y Google). actualizacion
 *   **Dashboard Personalizado:** Un espacio central para visualizar el progreso, metas y acceder a las herramientas principales.
 *   **Hub de Aprendizaje (MVP):** Sección con ejemplos de cursos para mejorar habilidades (con planes de personalización por IA).
 *   **Bolsa de Trabajo (MVP):** Sección con ejemplos de ofertas laborales (con planes de personalización por IA).
