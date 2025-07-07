@@ -29,7 +29,7 @@ Este proyecto es un Producto Mínimo Viable (MVP) funcional, con las principales
 ## Despliegue
 
 Este proyecto está configurado para un despliegue sencillo en plataformas como Netlify, Vercel o Firebase Hosting.
-Para Netlify, se incluye un archivo `netlify.toml` con la configuración de build. actualizacion
+Para Netlify, se incluye un archivo `netlify.toml` con la configuración de build. actualiza
 
 Las variables de entorno necesarias (principalmente las claves de API de Firebase) deben configurarse en la plataforma de hosting.
 
